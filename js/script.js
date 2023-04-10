@@ -1,4 +1,6 @@
-function init() {
+async function init() {
+    setURL('http://developerakademie.com/smallest_backend_ever');
+    await downloadFromServer();
     includeHTML();
 }
 
