@@ -1,9 +1,17 @@
+setURL('http://developerakademie.com/smallest_backend_ever');
+
+
+/**
+ * Initialize certain funtions on page load
+ */
 async function init() {
-    setURL('http://developerakademie.com/smallest_backend_ever');
-    await downloadFromServer();
     includeHTML();
 }
 
+
+/**
+ * Load/Include HTML templates
+ */
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
     for (let i = 0; i < includeElements.length; i++) {
