@@ -41,11 +41,15 @@ function toggleClass(id, className) {
 
 
 /**
- * Add hightlight effect to navigation item depending on it's current page.
+ * Highlights navigation item depending on whether the corresponding page is displayed.
  * 
  * @param {String} id 
  */
 function changeHighlight(id) {
-    document.querySelector('.active').classList.remove('active');
-    document.getElementById(id).classList.add('active');
+    let currentlyActive = document.querySelector('.active');
+    currentlyActive.classList.remove('active');
+
+    let newActive = document.getElementById(id);
+    newActive.classList.add('active');
+    newActive.firstElementChild.src = `assets/img/${id}-icon-white.png`;
 }
