@@ -1,16 +1,16 @@
-setURL('http://developerakademie.com/smallest_backend_ever');
-
-
 /**
- * Initialize certain funtions on page load
+ * Initialize certain functions when page is loaded.
+ * 
+ * @param {String} id 
  */
-async function init() {
-    includeHTML();
+async function init(id) {
+    await includeHTML();
+    changeHighlight(id);
 }
 
 
 /**
- * Load/Include HTML templates
+ * Load/Include HTML templates.
  */
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
@@ -24,4 +24,28 @@ async function includeHTML() {
             element.innerHTML = 'Page not found';
         }
     }
+}
+
+
+/**
+ * Toggle class of an element. 
+ * e.g. Let log out button appear and disappear by clicking on the profile icon.
+ * id = log-out-button; className = hide;
+ * 
+ * @param {String} id 
+ * @param {String} className 
+ */
+function toggleClass(id, className) {
+    document.getElementById(id).classList.toggle(className);
+}
+
+
+/**
+ * Add hightlight effect to navigation item depending on it's current page.
+ * 
+ * @param {String} id 
+ */
+function changeHighlight(id) {
+    document.querySelector('.active').classList.remove('active');
+    document.getElementById(id).classList.add('active');
 }

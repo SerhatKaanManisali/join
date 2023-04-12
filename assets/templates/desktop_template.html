@@ -1,33 +1,37 @@
 <header class="header">
     <span class="title">Kanban Project Management Tool</span>
     <div class="header-icons">
-        <img src="assets/img/question-mark-icon.png">
-        <img src="assets/img/profile-icon.png">
+        <a href="help.html"><img src="assets/img/question-mark-icon.png"></a>
+        <img src="assets/img/profile-icon.png" onclick="toggleClass('log-out-button', 'hide')">
     </div>
 </header>
+
+<span id="log-out-button" class="log-out hide">
+    Log out
+</span>
 
 <div class="side-bar">
     <img class="join-logo" src="assets/img/join-logo.png">
     <nav class="nav">
-        <div class="nav-item">
+        <a id="summary-link" href="summary.html" class="nav-item active">
             <img src="assets/img/summary-icon.png">
             <span>Summary</span>
-        </div>
-        <div class="nav-item">
+        </a>
+        <a id="board-link" href="board.html" class="nav-item">
             <img src="assets/img/board-icon.png">
             <span>Board</span>
-        </div>
-        <div class="nav-item">
+        </a>
+        <a id="add-task-link" href="add_task.html" class="nav-item">
             <img src="assets/img/add-task-icon.png">
             <span>Add Task</span>
-        </div>
-        <div class="nav-item">
+        </a>
+        <a id="contacts-link" href="contacts.html" class="nav-item">
             <img src="assets/img/contacts-icon.png">
             <span>Contacts</span>
-        </div>
-        <div class="nav-item legal-notice">
+        </a>
+        <a id="legal-notice-link" href="legal_notice.html" class="legal-notice">
             <img src="assets/img/legal-notice-icon.png">
             <span>Legal notice</span>
-        </div>
+        </a>
     </nav>
 </div>
