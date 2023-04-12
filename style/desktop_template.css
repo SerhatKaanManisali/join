@@ -1,4 +1,4 @@
-header {
+.header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -41,13 +41,45 @@ header {
     top: 0px;
     background: #2A3647;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 0px;
 }
 
 .join-logo {
+    margin: 66px 66px 0px 66px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #CDCDCD;
+    padding: 8px 57px;
+    gap: 20px;
+    width: 232px;
+    height: 54px;
+}
+
+.active {
+    background-color: #091931;
+    color: white;
+}
+
+.legal-notice {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 8px;
+    width: 196px;
+    color: #CDCDCD;
     position: absolute;
-    left: 28.44%;
-    right: 28.44%;
-    top: 6.45%;
-    bottom: 81.64%;
+    bottom: 112px;
+    left: 36px;
+    right: 36px;
 }
