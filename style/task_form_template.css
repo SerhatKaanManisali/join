@@ -1,11 +1,15 @@
 .add-task-content {
     margin-left: 355px;
-    margin-top: 171px;
+    margin-top: 145px;
 }
 
 h1 {
     font-weight: 700;
     font-size: 61px;
+}
+
+form {
+    max-width: 960px;
 }
 
 .task-form {
@@ -65,4 +69,46 @@ h1 {
     font-family: 'Inter', sans-serif;
     margin: 8px 0px;
     background-color: white;
+}
+
+.prio {
+    display: flex;
+    gap: 10px;
+    margin: 8px 0px;
+}
+
+.prio-button {
+    border: unset;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 21px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    width: 136px;
+    height: 51px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.clear-button {
+    background-color: white;
+    font-size: 21px;
+    padding: 18px 10px;
+    border-radius: 10px;
+    border: 1px solid #2A3647
+}
+
+.create-button {
+    background-color: #2A3647;
+    font-size: 21px;
+    padding: 18px 10px;
+    border-radius: 10px;
+    color: white;
+    border: unset;
 }

@@ -11,3 +11,11 @@ body {
 .hide {
     display: none;
 }
+
+.scale-on-hover {
+    transition: transform 125ms ease-in-out;
+}
+
+.scale-on-hover:hover {
+    transform: scale(1.1);
+}
