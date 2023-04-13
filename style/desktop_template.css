@@ -69,7 +69,7 @@
 .active {
     background-color: #091931;
     color: white !important;
-    cursor: unset !important;
+    pointer-events: none;
 }
 
 .legal-notice {

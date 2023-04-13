@@ -1,0 +1,54 @@
+<div class="add-task-content">
+    <h1>Add Task</h1>
+    <form class="task-form" onsubmit=";return false">
+        <div class="column-left">
+            <div class="form-item">
+                <span>Title</span>
+                <input class="form-element" type="text" placeholder="Enter a title">
+                <span class="validation-note">This field is required</span>
+            </div>
+            <div class="form-item">
+                <span>Description</span>
+                <textarea class="form-element" cols="60" rows="5" placeholder="Enter a description" ></textarea>
+                <span class="validation-note">This field is required</span>
+            </div>
+            <div class="form-item">
+                <span>Category</span>
+                <select class="form-element">
+                    <option value="">Select task category</option>
+                    <option value="">New category</option>
+                    <option value="">Sales</option>
+                    <option value="">Backoffice</option>
+                </select>
+                <span class="validation-note">This field is required</span>
+            </div>
+            <div class="form-item">
+                <span>Assigned to</span>
+                <select class="form-element">
+                    <option value="">Select contacts to assign</option>
+                    <option value="">You</option>
+                    <option value="">Maximilian Vogel</option>
+                    <option value="">Invite new contact</option>
+                </select>
+                <span class="validation-note">This field is required</span>
+            </div>
+        </div>
+        <div class="column-right">
+            <div class="form-item">
+                <span>Due date</span>
+                <input class="date-input" type="date" placeholder="dd/mm/yyyy">
+                <span class="validation-note">This field is required</span>
+            </div>
+            <div class="form-item">
+                <span>Prio</span>
+                <input type="button" value="Urgent">
+                <input type="button" value="Medium">
+                <input type="button" value="Low">
+            </div>
+            <div class="form-item">
+                <span>Subtasks</span>
+                <input class="form-element" type="text" placeholder="Add new subtask">
+            </div>
+        </div>
+    </form>
+</div>
