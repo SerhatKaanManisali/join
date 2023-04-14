@@ -4,6 +4,8 @@
  * @param {String} id 
  */
 async function init(id) {
+    setURL('https://gruppe-525.developerakademie.net/smallest_backend_ever');
+    await loadTask()
     await includeHTML();
     changeHighlight(id);
 }

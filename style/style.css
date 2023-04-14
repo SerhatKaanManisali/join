@@ -13,7 +13,7 @@ body {
 }
 
 .scale-on-hover {
-    transition: transform 125ms ease-in-out;
+    transition: transform 100ms ease-in-out;
 }
 
 .scale-on-hover:hover {

@@ -66,6 +66,11 @@
     text-decoration: none;
 }
 
+.nav-item:hover {
+    background-color: #091931;
+    color: white !important;
+}
+
 .active {
     background-color: #091931;
     color: white !important;
@@ -85,6 +90,11 @@
     bottom: 112px;
     cursor: pointer;
     text-decoration: none;
+}
+
+.legal-notice:hover {
+    background-color: #091931;
+    color: white !important;
 }
 
 .log-out {

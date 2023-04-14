@@ -1,63 +1,76 @@
 <div class="add-task-content">
     <h1>Add Task</h1>
-    <form onsubmit=";return false">
+    <form onsubmit="addTask(); return false;">
         <div class="task-form">
             <div class="column-left">
                 <div class="form-item">
                     <label for="title">Title</label>
-                    <input class="form-element" type="text" placeholder="Enter a title">
-                    <span class="validation-note">This field is required</span>
+                    <input id="title" class="form-element" type="text" placeholder="Enter a title">
+                    <span class="validation-note hide">This field is required</span>
                 </div>
                 <div class="form-item">
                     <label for="description">Description</label>
-                    <textarea class="form-element" cols="60" rows="5" placeholder="Enter a description"></textarea>
-                    <span class="validation-note">This field is required</span>
+                    <textarea id="description" class="form-element" cols="60" rows="3" placeholder="Enter a description"></textarea>
+                    <span class="validation-note hide">This field is required</span>
                 </div>
                 <div class="form-item">
                     <label for="category">Category</label>
-                    <select class="form-element">
+                    <select id="category" class="form-element">
                         <option value="" hidden>Select task category</option>
                         <option value="">New category</option>
-                        <option value="">Sales</option>
-                        <option value="">Backoffice</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Backoffice">Backoffice</option>
                     </select>
-                    <span class="validation-note">This field is required</span>
+                    <span class="validation-note hide">This field is required</span>
                 </div>
                 <div class="form-item">
                     <label for="assignment">Assign to</label>
-                    <select class="form-element">
+                    <select id="assignment" class="form-element">
                         <option value="" hidden>Select contacts to assign</option>
-                        <option value="">You</option>
-                        <option value="">Maximilian Vogel</option>
+                        <option value="You">You</option>
+                        <option value="Maximilian Vogel">Maximilian Vogel</option>
                         <option value="">Invite new contact</option>
                     </select>
-                    <span class="validation-note">This field is required</span>
+                    <span class="validation-note hide">This field is required</span>
                 </div>
             </div>
             <div class="column-right">
                 <div class="form-item">
                     <span>Due date</span>
-                    <input class="date-input" type="date" placeholder="dd/mm/yyyy">
-                    <span class="validation-note">This field is required</span>
+                    <input id="date" class="date-input" type="date">
+                    <span class="validation-note hide">This field is required</span>
                 </div>
                 <div class="form-item">
                     <span>Prio</span>
-                    <div class="prio">
-                        <input class="prio-button" type="button" value="Urgent">
-                        <input class="prio-button" type="button" value="Medium">
-                        <input class="prio-button" type="button" value="Low">
+                    <div id="prio" class="prio">
+                        <button id="urgent-button" class="prio-button" type="button" value="urgent"
+                            onclick="toggleClass('urgent-button', 'active-urgent'); changePrioImage('urgent');">Urgent
+                            <img src="assets/img/default-urgent.png">
+                        </button>
+                        <button id="medium-button" class="prio-button" type="button" value="medium"
+                            onclick="toggleClass('medium-button', 'active-medium'); changePrioImage('medium');">Medium
+                            <img src="assets/img/default-medium.png">
+                        </button>
+                        <button id="low-button" class="prio-button" type="button" value="low"
+                            onclick="toggleClass('low-button', 'active-low'); changePrioImage('low');">Low
+                            <img src="assets/img/default-low.png">
+                        </button>
                     </div>
-                    <span class="validation-note">Priority selection is mandatory</span>
+                    <span class="validation-note hide">Priority selection is mandatory</span>
                 </div>
                 <div class="form-item">
                     <span>Subtasks</span>
-                    <input class="form-element" type="text" placeholder="Add new subtask">
+                    <input id="subtask" class="form-element" type="text" placeholder="Add new subtask">
                 </div>
             </div>
         </div>
         <div class="form-buttons">
-            <button class="clear-button scale-on-hover" type="reset">Clear <img src="assets/img/cross-icon.png"></button>
-            <button class="create-button scale-on-hover" type="submit">Create Task <img src="assets/img/check-icon.png"></button>
+            <button id="clear-button" class="clear-button" type="reset"
+                onmouseenter="changeImageOnHover('clear-button', 'assets/img/hover-cross.png')"
+                onmouseleave="changeImageOnHover('clear-button', 'assets/img/default-cross.png')">Clear <img
+                    src="assets/img/default-cross.png"></button>
+            <button class="create-button" type="submit">Create Task <img id="create-button"
+                    src="assets/img/check-icon.png"></button>
         </div>
     </form>
 </div>

@@ -23,17 +23,18 @@ form {
 }
 
 .column-right {
-    margin-left: 58px;
+    margin-left: 50px;
 }
 
 .form-item {
     margin-bottom: 14px;
+    margin-right: 50px;
 }
 
 .form-element {
     display: flex;
     flex-direction: column;
-    width: 422px;
+    width: 428px;
     padding-left: 21px;
     padding-top: 13px;
     padding-bottom: 13px;
@@ -41,7 +42,7 @@ form {
     border: 1px solid #D1D1D1;
     font-size: 21px;
     font-family: 'Inter', sans-serif;
-    margin: 8px 0px;
+    margin: 8px 0;
     background-color: white;
     resize: none;
 }
@@ -59,7 +60,7 @@ form {
 
 .date-input {
     display: flex;
-    width: 422px;
+    width: 428px;
     padding-left: 21px;
     padding-top: 13px;
     padding-bottom: 13px;
@@ -88,6 +89,33 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+}
+
+.prio-button:hover {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.active-urgent {
+    color: white;
+    font-weight: 700;
+    background-color: #FF3D00;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.active-medium {
+    color: white;
+    font-weight: 700;
+    background-color: #FFA800;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.active-low {
+    color: white;
+    font-weight: 700;
+    background-color: #7AE229;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .form-buttons {
@@ -101,7 +129,8 @@ form {
     font-size: 21px;
     padding: 18px 10px;
     border-radius: 10px;
-    border: 1px solid #2A3647
+    border: 1px solid #2A3647;
+    color: #2A3647;
 }
 
 .create-button {
@@ -111,4 +140,18 @@ form {
     border-radius: 10px;
     color: white;
     border: unset;
+    font-weight: 700;
+}
+
+.clear-button:hover {
+    border: 2px solid #29ABE2;
+    color: #29ABE2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.create-button:hover {
+    background-color: #29ABE2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
 }
