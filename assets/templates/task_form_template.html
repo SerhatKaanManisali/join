@@ -1,6 +1,6 @@
 <div class="content-margin">
     <h1>Add Task</h1>
-    <form onsubmit="return false; addTask()">
+    <form onsubmit="addTask(); return false;">
         <div class="task-form">
             <div class="column-left">
                 <div class="form-item">
@@ -16,22 +16,29 @@
                 </div>
                 <div class="form-item">
                     <label for="category">Category</label>
-                    <div class="dropdown" onclick="toggleDropdown('category')">
-                        <button id="category" class="form-element dropdown-button">
-                            <span>Select task category</span>
+                    <div id="category-box" class="dropdown" onclick="toggleDropdown('category')">
+                        <button id="category" class="form-element dropdown-button" type="button">
+                            <span id="selected-by-default">Select task category</span>
                             <img src="assets/img/dropdow-arrow.png">
                             <div id="category-options" class="dropdown-content collapse">
-                                <div>New category</div>
-                                <div>Sales <img src="assets/img/purple-circle.png"></div>
-                                <div>Backoffice <img src="assets/img/turquoise-circle.png"></div>
+                                <div id="new-category" onclick="createCategory()">New category</div>
+                                <div id="sales" onclick="selectCategory('sales', 'assets/img/purple-circle.png')">
+                                    Sales 
+                                    <img src="assets/img/purple-circle.png">
+                                </div>
+                                <div id="backoffice" onclick="selectCategory('backoffice', 'assets/img/turquoise-circle.png')">
+                                    Backoffice 
+                                    <img src="assets/img/turquoise-circle.png">
+                                </div>
                             </div>
                         </button>
                     </div>
-                    <span class="validation-note">This field is required</span>
+                    <div id="colors" class="colors"></div>
+                    <span id="category-validation" class="validation-note"></span>
                 </div>
                 <div class="form-item">
                     <label for="assignment">Assign to</label>
-                    <div class="dropdown" onclick="toggleDropdown('assignment')">
+                    <div id="assignment-box" class="dropdown" onclick="toggleDropdown('assignment')">
                         <button id="assignment" class="form-element dropdown-button">
                             <span>Select contacts to assign</span>
                             <img src="assets/img/dropdow-arrow.png">
