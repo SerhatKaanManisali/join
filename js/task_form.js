@@ -1,66 +1,90 @@
-let allTasks = [];
+let oldDropdown;
+let category;
 let allColors = ["assets/img/lightblue-circle.png", "assets/img/red-circle.png", "assets/img/green-circle.png", "assets/img/orange-circle.png", "assets/img/pink-circle.png", "assets/img/blue-circle.png"];
 let currentColor;
 let activeColor;
 let defaultColor;
 let prio;
-let category;
-let oldDropdown;
 
 
 /**
- * Adds a task which is also visible to other users later on.
- */
-function addTask() {
-    taskElementsTemplate();
-    let task = {
-        'title': title.value,
-        'description': description.value,
-        'category': category,
-        'assignment': assignment,
-        'date': date,
-        'prio': prio,
-        'subtask': subtask
-    }
-    saveTask(task);
-}
-
-
-/**
- * Saves the task which has been recently added on the server.
+ * Forces you to enter at least one character in the title field.
  * 
- * @param {JSON} task 
+ * @returns the task's title.
  */
-async function saveTask(task) {
-    allTasks.push(task);
-    let allTasksAsText = JSON.stringify(allTasks);
-    await backend.setItem('allTasks', allTasksAsText);
-}
-
-
-/**
- * Loads all Tasks which are stored from the server.
- */
-async function loadTask() {
-    await downloadFromServer();
-    let loadedTasks = JSON.parse(backend.getItem('allTasks'));
-    allTasks = loadedTasks || [];
-}
-
-
-/**
- * Improves the function's clarity.
- * 
- * @returns single elements of a task.
- */
-function taskElementsTemplate() {
+function validateTitle() {
     let title = document.getElementById('title');
-    let description = document.getElementById('description');
-    let assignment = document.getElementById('assignment');
-    let date = document.getElementById('date');
-    let subtask = document.getElementById('subtask');
+    let validationNote = document.getElementById('title-validation');
+    if (title.value == '') {
+        validationNote.innerHTML = 'Please enter a title';
+    } else {
+        validationNote.innerHTML = '';
+        return title.value;
+    }
+}
 
-    return title, description, category, assignment, date, subtask;
+
+/**
+ * Forces you to enter at least one character in the description field.
+ * 
+ * @returns the task's description.
+ */
+function validateDescription() {
+    let description = document.getElementById('description');
+    let validationNote = document.getElementById('description-validation');
+    if (description.value == '') {
+        validationNote.innerHTML = 'Please enter a description'
+    } else {
+        validationNote.innerHTML = '';
+        return description.value;
+    }
+}
+
+
+/**
+ * Forces you to pick a category.
+ * 
+ * @returns the task's category.
+ */
+function validateCategory() {
+    let validationNote = document.getElementById('category-validation');
+    if (category == undefined) {
+        validationNote.innerHTML = 'Please select a category'
+    } else {
+        validationNote.innerHTML = ''
+        return category;
+    }
+}
+
+
+/**
+ * @returns contacts that have been assigned to a task.
+ */
+function validateAssignment() {
+    let assignment = [];
+    let selectedContacts = document.getElementById('assignment-options').querySelectorAll('img[src*="filled"]');
+    let validationNote = document.getElementById('assignment-validation');
+    if (selectedContacts.length == 0) {
+        validationNote.innerHTML = 'Please select at least one contact'
+    } else {
+        validationNote.innerHTML = '';
+        selectedContacts.forEach(selectedContact => assignment.push(selectedContact.previousElementSibling.innerHTML));
+        return assignment;
+    }
+}
+
+
+/**
+ * @returns value of the prio.
+ */
+function validatePrio() {
+    let validationNote = document.getElementById('prio-validation');
+    if (prio == undefined) {
+        validationNote.innerHTML = 'Please pick a prio';
+    } else {
+        validationNote.innerHTML = '';
+        return prio;
+    }
 }
 
 
@@ -124,6 +148,9 @@ function setCategoryAttributes(element, idValue) {
 }
 
 
+/**
+ * Shows dropdown if you cancel the category cretion process.
+ */
 function cancelNewCategory() {
     let categoryBox = document.getElementById(`category-box`);
     let colors = document.getElementById('colors');
@@ -136,6 +163,9 @@ function cancelNewCategory() {
 }
 
 
+/**
+ * Adds a new category after validation.
+ */
 function addNewCategory() {
     let validationNote = document.getElementById('category-validation');
     let newCategoryName = document.getElementById('input-category').value;
@@ -147,6 +177,12 @@ function addNewCategory() {
 }
 
 
+/**
+ * Forces you to pick exactly one color.
+ * 
+ * @param {String} validationNote 
+ * @param {String} newCategoryName 
+ */
 function validateColor(validationNote, newCategoryName) {
     if (currentColor == undefined) {
         validationNote.innerHTML = 'Please pick a color';
@@ -159,6 +195,11 @@ function validateColor(validationNote, newCategoryName) {
 }
 
 
+/**
+ * Inserts the newly added category to it's dropdown.
+ * 
+ * @param {String} newCategoryName 
+ */
 function insertCategoryToDropdown(newCategoryName) {
     let addCategoryButton = document.getElementById('new-category');
     let lowNewCategoryName = newCategoryName.toLowerCase();
@@ -168,32 +209,22 @@ function insertCategoryToDropdown(newCategoryName) {
 
 
 /**
- * This template improves clarity.
- * 
- * @returns innerHTML of new input field
+ * Renders the color palatte to choose from when creating a new category.
  */
-function createCategoryTemplate() {
-    return /*html*/`
-        <div class="create-category-buttons">
-            <img class="cursor-pointer" src="assets/img/black-cross.png" onclick="cancelNewCategory()">
-            <img src="assets/img/vertical-line.png">
-            <img class="cursor-pointer" src="assets/img/black-check.png" onclick="addNewCategory()">
-        </div>
-    `;
-}
-
-
 function createColors() {
     let colorPalette = document.getElementById('colors');
     for (let c = 0; c < allColors.length; c++) {
         const color = allColors[c];
-        colorPalette.innerHTML += /*html*/`
-            <img id="${color}" onclick="pickColor('${color}')" src="${color}">
-        `;
+        colorPalette.innerHTML += colorTemplate();
     }
 }
 
 
+/**
+ * Picks a color and highlights picked color when creating a new category.
+ * 
+ * @param {String} color 
+ */
 function pickColor(color) {
     toggleClass(color, 'active-color');
     let colorPalette = document.getElementById('colors');
@@ -203,6 +234,12 @@ function pickColor(color) {
 }
 
 
+/**
+ * Makes only one color choosable when creating a new category.
+ * 
+ * @param {String} color 
+ * @param {NodeList} defaultColor 
+ */
 function disableRemainingColors(color, defaultColor) {
     if (color == currentColor) {
         currentColor = undefined;
@@ -214,12 +251,29 @@ function disableRemainingColors(color, defaultColor) {
 }
 
 
+/**
+ * @param {String} newCategoryName 
+ * @param {String} lowNewCategoryName 
+ * @returns HTML template of newly created category.
+ */
 function newCategoryTemplate(newCategoryName, lowNewCategoryName) {
     return /*html*/`
         <div id="${lowNewCategoryName}" onclick="selectCategory('${lowNewCategoryName}')">
         ${newCategoryName} <img src="${currentColor}">
         </div>
     `;
+}
+
+
+function selectContact(id) {
+    let selectedContact = document.getElementById(id);
+    let protocol = window.location.protocol;
+    let host = window.location.host;
+    if (selectedContact.lastElementChild.src == `${protocol}//${host}/assets/img/unchecked-checkbox.png`) {
+        selectedContact.lastElementChild.src = `assets/img/filled-checkbox.png`;
+    } else {
+        selectedContact.lastElementChild.src = `assets/img/unchecked-checkbox.png`;
+    }
 }
 
 
@@ -306,7 +360,6 @@ function changeImageOnHover(id, url) {
  */
 function toggleDropdown(id) {
     let dropdownOptions = document.getElementById(`${id}-options`);
-
     if (dropdownOptions.classList.contains('collapse')) {
         dropdownOptions.classList.replace('collapse', 'expand');
         dropdownOptions.previousElementSibling.classList.add('rotate-arrow');
@@ -314,6 +367,5 @@ function toggleDropdown(id) {
         dropdownOptions.classList.replace('expand', 'collapse');
         dropdownOptions.previousElementSibling.classList.remove('rotate-arrow');
     }
-
     toggleClass(id, 'dropdown-active');
 }

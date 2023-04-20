@@ -6,13 +6,13 @@
                 <div class="form-item">
                     <label for="title">Title</label>
                     <input id="title" class="form-element" type="text" placeholder="Enter a title">
-                    <span class="validation-note">This field is required</span>
+                    <span id="title-validation" class="validation-note"></span>
                 </div>
                 <div class="form-item">
                     <label for="description">Description</label>
                     <textarea id="description" class="form-element" cols="60" rows="3"
                         placeholder="Enter a description"></textarea>
-                    <span class="validation-note">This field is required</span>
+                    <span id="description-validation" class="validation-note"></span>
                 </div>
                 <div class="form-item">
                     <label for="category">Category</label>
@@ -39,24 +39,26 @@
                 <div class="form-item">
                     <label for="assignment">Assign to</label>
                     <div id="assignment-box" class="dropdown" onclick="toggleDropdown('assignment')">
-                        <button id="assignment" class="form-element dropdown-button">
+                        <button id="assignment" class="form-element dropdown-button" type="button">
                             <span>Select contacts to assign</span>
                             <img src="assets/img/dropdow-arrow.png">
                             <div id="assignment-options" class="dropdown-content collapse">
-                                <div>
-                                    You
+                                <div id="you" onclick="selectContact('you')">
+                                    <span>You</span>
+                                    <img src="assets/img/unchecked-checkbox.png">
+                                </div>
+                                <div id="maximilian-vogel" onclick="selectContact('maximilian-vogel')">
+                                    <span>Maximilian Vogel</span>
+                                    <img src="assets/img/unchecked-checkbox.png">
                                 </div>
                                 <div>
-                                    Maximilian Vogel
-                                </div>
-                                <div>
-                                    Invite new contact
+                                    <span>Invite new contact</span>
                                     <img src="assets/img/contacts-icon-black.png">
                                 </div>
                             </div>
                         </button>
                     </div>
-                    <span class="validation-note">This field is required</span>
+                    <span id="assignment-validation" class="validation-note"></span>
                 </div>
             </div>
             <div class="column-right">
@@ -64,7 +66,7 @@
                     <div class="form-item">
                         <span>Due date</span>
                         <input id="date" class="date-input" type="date">
-                        <span class="validation-note ">This field is required</span>
+                        <span id="date-validation" class="validation-note "></span>
                     </div>
                     <div class="form-item">
                         <span>Prio</span>
@@ -82,7 +84,7 @@
                                 <img src="assets/img/default-low.png">
                             </button>
                         </div>
-                        <span class="validation-note ">Priority selection is mandatory</span>
+                        <span id="prio-validation" class="validation-note"></span>
                     </div>
                     <div class="form-item">
                         <span>Subtasks</span>

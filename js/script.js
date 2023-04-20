@@ -1,3 +1,6 @@
+let allTasks = [];
+
+
 /**
  * Initialize certain functions when page is loaded.
  * 
@@ -26,6 +29,53 @@ async function includeHTML() {
             element.innerHTML = 'Page not found';
         }
     }
+}
+
+
+/**
+ * Adds a task which is also visible to other users later on.
+ */
+function addTask() {
+    let validationNotes = document.getElementsByClassName('validation-note');
+    validateForm();
+    taskTemplate();
+    if (validateForm().length == validationNotes.length) {
+        saveTask(task);
+    }
+    }
+
+
+/**
+ * Saves the task which has been recently added on the server.
+ * 
+ * @param {JSON} task 
+ */
+async function saveTask(task) {
+    allTasks.push(task);
+    let allTasksAsText = JSON.stringify(allTasks);
+    await backend.setItem('allTasks', allTasksAsText);
+}
+
+
+/**
+ * Loads all Tasks which are stored from the server.
+ */
+async function loadTask() {
+    await downloadFromServer();
+    let loadedTasks = JSON.parse(backend.getItem('allTasks'));
+    allTasks = loadedTasks || [];
+}
+
+
+function validateForm() {
+    let validationNotes = document.getElementsByClassName('validation-note');
+    let result = [];
+    for (let i = 0; i < validationNotes.length; i++) {
+        if (validationNotes[i].innerHTML == '') {
+            result.push(validationNotes[i]);
+        }
+    }
+    return result;
 }
 
 
