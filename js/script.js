@@ -38,9 +38,9 @@ async function includeHTML() {
  */
 function addTask() {
     let validationNotes = document.getElementsByClassName('validation-note');
-    validateForm();
+    let task = taskTemplate();
     if (validateForm().length == validationNotes.length) {
-        saveTask(taskTemplate());
+        saveTask(task);
     }
 }
 
@@ -64,21 +64,6 @@ async function loadTask() {
     await downloadFromServer();
     let loadedTasks = JSON.parse(backend.getItem('allTasks'));
     allTasks = loadedTasks || [];
-}
-
-
-/**
- * @returns arry including all empty validation notes.
- */
-function validateForm() {
-    let validationNotes = document.getElementsByClassName('validation-note');
-    let result = [];
-    for (let i = 0; i < validationNotes.length; i++) {
-        if (validationNotes[i].innerHTML == '') {
-            result.push(validationNotes[i]);
-        }
-    }
-    return result;
 }
 
 

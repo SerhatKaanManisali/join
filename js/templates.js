@@ -21,7 +21,7 @@ function taskTemplate() {
  */
 function createCategoryTemplate() {
     return /*html*/`
-        <div class="create-category-buttons">
+        <div class="create-buttons">
             <img class="cursor-pointer scale-on-hover" src="assets/img/black-cross.png" onclick="cancelNewCategory()">
             <img src="assets/img/vertical-line.png">
             <img class="cursor-pointer scale-on-hover" src="assets/img/black-check.png" onclick="addNewCategory()">
@@ -48,7 +48,7 @@ function colorTemplate(color) {
 function newCategoryTemplate(newCategoryName, lowNewCategoryName) {
     return /*html*/`
         <div id="${lowNewCategoryName}" onclick="selectCategory('${lowNewCategoryName}')">
-        ${newCategoryName} <img src="${currentColor}">
+        ${newCategoryName} <img src="${activeColor.src}">
         </div>
     `;
 }

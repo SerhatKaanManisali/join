@@ -227,12 +227,7 @@ form {
     transform: scaleY(0.0);
 }
 
-.disabled {
-    pointer-events: none;
-    filter: brightness(0.98);
-}
-
-.create-category-buttons {
+.create-buttons {
     display: flex;
     align-items: center;
     gap: 10px;

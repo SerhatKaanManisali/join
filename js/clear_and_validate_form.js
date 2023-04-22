@@ -1,15 +1,29 @@
 /**
+ * @returns arry including all empty validation notes.
+ */
+function validateForm() {
+    let validationNotes = document.getElementsByClassName('validation-note');
+    let result = [];
+    for (let i = 0; i < validationNotes.length; i++) {
+        if (validationNotes[i].innerHTML == '') {
+            result.push(validationNotes[i]);
+        }
+    }
+    return result;
+}
+
+
+/**
  * Forces you to enter at least one character in the title field.
  * 
  * @returns the task's title.
  */
 function validateTitle() {
     let title = document.getElementById('title');
-    let validationNote = document.getElementById('title-validation');
     if (title.value == '') {
-        validationNote.innerHTML = 'Please enter a title';
+        validationMessage('title', 'Please enter a title');
     } else {
-        validationNote.innerHTML = '';
+        validationMessage('title');
         return title.value;
     }
 }
@@ -22,11 +36,10 @@ function validateTitle() {
  */
 function validateDescription() {
     let description = document.getElementById('description');
-    let validationNote = document.getElementById('description-validation');
     if (description.value == '') {
-        validationNote.innerHTML = 'Please enter a description';
+        validationMessage('description', 'Please enter a description');
     } else {
-        validationNote.innerHTML = '';
+        validationMessage('description');
         return description.value;
     }
 }
@@ -38,11 +51,10 @@ function validateDescription() {
  * @returns the task's category.
  */
 function validateCategory() {
-    let validationNote = document.getElementById('category-validation');
     if (category == undefined) {
-        validationNote.innerHTML = 'Please select a category';
+        validationMessage('category', 'Please select a category');
     } else {
-        validationNote.innerHTML = '';
+        validationMessage('category');
         return category;
     }
 }
@@ -54,11 +66,10 @@ function validateCategory() {
 function validateAssignment() {
     let assignment = [];
     let selectedContacts = document.getElementById('assignment-options').querySelectorAll('img[src*="filled"]');
-    let validationNote = document.getElementById('assignment-validation');
     if (selectedContacts.length == 0) {
-        validationNote.innerHTML = 'Please select at least one contact';
+        validationMessage('assignment', 'Please select at least one contact');
     } else {
-        validationNote.innerHTML = '';
+        validationMessage('assignment');
         selectedContacts.forEach(selectedContact => assignment.push(selectedContact.previousElementSibling.innerHTML));
         return assignment;
     }
@@ -69,27 +80,25 @@ function validateAssignment() {
  * @returns value of the picked date.
  */
 function validateDate() {
-    let validationNote = document.getElementById('date-validation');
     let datePicker = document.getElementById('date');
     if (datePicker.value == '') {
-        validationNote.innerHTML = 'Please pick a date';
+        validationMessage('date', 'Please pick a date');
     } else {
-        validationNote.innerHTML = '';
+        validationMessage('date');
         return datePicker.value;
     }
 }
 
 
 /**
- * @returns value of the prio.
+ * @returns value of the active prio.
  */
 function validatePrio() {
-    let validationNote = document.getElementById('prio-validation');
-    if (prio == undefined) {
-        validationNote.innerHTML = 'Please pick a prio';
+    if (activePrio == undefined) {
+        validationMessage('prio', 'Please pick a prio');
     } else {
-        validationNote.innerHTML = '';
-        return prio;
+        validationMessage('prio');
+        return activePrio.value;
     }
 }
 
@@ -101,7 +110,7 @@ function validatePrio() {
  * @param {String} newCategoryName 
  */
 function validateColor(validationNote, newCategoryName) {
-    if (currentColor == undefined) {
+    if (activeColor == undefined) {
         validationNote.innerHTML = 'Please pick a color';
     } else {
         cancelNewCategory();
@@ -156,12 +165,10 @@ function clearDate() {
  */
 function clearPrio() {
     let activeButton = document.getElementById('prio').querySelector('button[class*="active-"]');
-    let disabledButtons = document.getElementById('prio').querySelectorAll('button[class*="disabled"]');
     if (activeButton) {
         let activeButtonValue = activeButton.value;
         activeButton.setAttribute('class', 'prio-button');
         activeButton.firstElementChild.src = `assets/img/default-${activeButtonValue}.png`;
-        disabledButtons.forEach(disabledButton => disabledButton.classList.remove('disabled'));
     }
 }
 
@@ -172,4 +179,20 @@ function clearPrio() {
 function clearSubtasks() {
     let subtaskList = document.getElementById('subtask-list');
     subtaskList.innerHTML = '';
+    subtasks = [];
+}
+
+
+/**
+ * Shows a message if a required field is empty.
+ * 
+ * @param {String} id 
+ * @param {String} message 
+ */
+function validationMessage(id, message) {
+    let validationMessage = document.getElementById(`${id}-validation`);
+    if (!message) {
+        message = '';
+    }
+    validationMessage.innerHTML = message;
 }

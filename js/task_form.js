@@ -1,10 +1,9 @@
-let oldDropdown;
+let oldCategoryDropdown;
 let category;
 let allColors = ["assets/img/lightblue-circle.png", "assets/img/red-circle.png", "assets/img/green-circle.png", "assets/img/orange-circle.png", "assets/img/pink-circle.png", "assets/img/blue-circle.png"];
 let currentColor;
 let activeColor;
-let defaultColor;
-let prio;
+let activePrio;
 let subtasks = [];
 
 
@@ -28,12 +27,12 @@ function selectCategory(value, src) {
  * Creates a new category.
  */
 function createCategory() {
-    oldDropdown = document.getElementById('category');
-    let oldId = oldDropdown.getAttribute('id');
+    oldCategoryDropdown = document.getElementById('category');
+    let oldId = oldCategoryDropdown.getAttribute('id');
     let newInput = document.createElement('input');
-    let categoryBox = document.getElementById(`category-box`);
-    changeDropdownToInput(categoryBox, oldDropdown, newInput);
-    setCategoryAttributes(newInput, oldId);
+    let categoryBox = document.getElementById('category-box');
+    changeDropdownToInput(categoryBox, oldCategoryDropdown, newInput);
+    setNewInputAttributes(newInput, oldId);
     categoryBox.innerHTML += createCategoryTemplate();
     createColors();
     currentColor = undefined;
@@ -41,26 +40,26 @@ function createCategory() {
 
 
 /**
- * Subfunction of createCategory() for changing the dropdown ot an input so you can type the new category's name.
+ * Replaces dropdown with an input.
  * 
- * @param {Element} categoryBox 
+ * @param {Element} parentElement 
  * @param {Element} oldDropdown 
  * @param {Element} newInput 
  */
-function changeDropdownToInput(categoryBox, oldDropdown, newInput) {
-    categoryBox.classList.replace('dropdown', 'input-parent');
-    categoryBox.onclick = null;
+function changeDropdownToInput(parentElement, oldDropdown, newInput) {
+    parentElement.classList.replace('dropdown', 'input-parent');
+    parentElement.onclick = null;
     oldDropdown.replaceWith(newInput);
 }
 
 
 /**
- * Transfers attribute of old category button to new input which appears when you want to create a new category.
+ * Transfers attributes of dropdown to new input which appears when you want to create a new category.
  * 
  * @param {Element} element
  * @param {String} idValue
  */
-function setCategoryAttributes(element, idValue) {
+function setNewInputAttributes(element, idValue) {
     element.setAttribute('id', `input-${idValue}`);
     element.setAttribute('class', `input-next-to-button`);
     element.setAttribute('type', 'text');
@@ -74,7 +73,7 @@ function setCategoryAttributes(element, idValue) {
 function cancelNewCategory() {
     revertCategoryBox();
     hideColorPalette();
-    validationMessage('category', '');
+    validationMessage('category');
 }
 
 
@@ -84,7 +83,7 @@ function cancelNewCategory() {
 function revertCategoryBox() {
     let categoryBox = document.getElementById(`category-box`);
     categoryBox.classList.replace('input-parent', 'dropdown');
-    categoryBox.replaceChildren(oldDropdown);
+    categoryBox.replaceChildren(oldCategoryDropdown);
     categoryBox.setAttribute('onclick', 'toggleDropdown("category")');
 }
 
@@ -122,7 +121,7 @@ function insertCategoryToDropdown(newCategoryName) {
     let addCategoryButton = document.getElementById('new-category');
     let lowNewCategoryName = newCategoryName.toLowerCase();
     addCategoryButton.insertAdjacentHTML('afterend', newCategoryTemplate(newCategoryName, lowNewCategoryName));
-    selectCategory(lowNewCategoryName, currentColor);
+    selectCategory(lowNewCategoryName, activeColor);
 }
 
 
@@ -146,27 +145,14 @@ function createColors() {
  * @param {String} color 
  */
 function pickColor(color) {
-    toggleClass(color, 'active-color');
     let colorPalette = document.getElementById('colors');
-    activeColor = colorPalette.querySelector('.active-color');
-    defaultColor = colorPalette.querySelectorAll(`img:not(.active-color)`);
-    disableRemainingColors(color, defaultColor);
-}
-
-
-/**
- * Makes only one color choosable when creating a new category.
- * 
- * @param {String} color 
- * @param {NodeList} defaultColor 
- */
-function disableRemainingColors(color, defaultColor) {
-    if (color == currentColor) {
-        currentColor = undefined;
-        defaultColor.forEach(defaultColor => defaultColor.classList.remove('disabled'));
+    if (activeColor == undefined) {
+        toggleClass(color, 'active-color');
+        activeColor = colorPalette.querySelector('.active-color');
     } else {
-        currentColor = color;
-        defaultColor.forEach(defaultColor => defaultColor.classList.add('disabled'));
+        toggleClass(activeColor.id, 'active-color');
+        toggleClass(color, 'active-color');
+        activeColor = colorPalette.querySelector('.active-color');
     }
 }
 
@@ -204,13 +190,18 @@ function setMinDate() {
  * @param {String} urgency 
  */
 function choosePrio(urgency) {
-    toggleClass(`${urgency}-button`, `active-${urgency}`);
-    changePrioImage(urgency);
     let prioBox = document.getElementById('prio');
-    let activePrio = prioBox.querySelector(`.active-${urgency}`);
-    let defaultPrio = prioBox.querySelectorAll(`button:not(.active-${urgency})`);
-    setUrgencyValue(urgency, activePrio);
-    disableRemainingPrio(defaultPrio, activePrio);
+    if (activePrio == undefined) {
+        toggleClass(`${urgency}-button`, `active-${urgency}`);
+        activePrio = prioBox.querySelector(`.active-${urgency}`);
+        changePrioImage(urgency);
+    } else {
+        toggleClass(activePrio.id, activePrio.classList[1]);
+        changePrioImage(activePrio.value);
+        toggleClass(`${urgency}-button`, `active-${urgency}`);
+        activePrio = prioBox.querySelector(`.active-${urgency}`);
+        changePrioImage(urgency);
+    }
 }
 
 
@@ -227,37 +218,6 @@ function changePrioImage(urgency) {
         button.firstElementChild.src = `assets/img/default-${urgency}.png`
     } else {
         button.firstElementChild.src = `assets/img/active-${urgency}.png`
-    }
-}
-
-
-/**
- * Gives the globally defined variable prio a value.
- * e.g. urgent.
- * 
- * @param {String} urgency 
- * @param {Element} activePrio 
- */
-function setUrgencyValue(urgency, activePrio) {
-    if (prio !== urgency) {
-        prio = activePrio.value
-    } else {
-        prio = undefined;
-    }
-}
-
-
-/**
- * Disables remaining prio buttons which have been not selected.
- * 
- * @param {Element} defaultPrio
- * @param {Element} activePrio
- */
-function disableRemainingPrio(defaultPrio, activePrio) {
-    if (activePrio) {
-        defaultPrio.forEach(defaultPrio => defaultPrio.classList.add('disabled'));
-    } else {
-        defaultPrio.forEach(defaultPrio => defaultPrio.classList.remove('disabled'));
     }
 }
 
@@ -294,8 +254,9 @@ function addSubtask() {
  * @param {String} id 
  */
 function deleteSubtask(id) {
-    let subtask = document.getElementById(id);
-    subtasks.splice(subtask.value, 1);
+    let subtask = document.getElementById(id)
+    let index = subtasks.indexOf(id);
+    subtasks.splice(index, 1);
     subtask.remove();
 }
 
@@ -315,16 +276,4 @@ function toggleDropdown(id) {
         dropdownOptions.previousElementSibling.classList.remove('rotate-arrow');
     }
     toggleClass(id, 'dropdown-active');
-}
-
-
-/**
- * Shows a message if a required field is empty.
- * 
- * @param {String} id 
- * @param {String} message 
- */
-function validationMessage(id, message) {
-    let validationMessage = document.getElementById(`${id}-validation`);
-    validationMessage.innerHTML = message;
 }
