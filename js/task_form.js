@@ -5,87 +5,7 @@ let currentColor;
 let activeColor;
 let defaultColor;
 let prio;
-
-
-/**
- * Forces you to enter at least one character in the title field.
- * 
- * @returns the task's title.
- */
-function validateTitle() {
-    let title = document.getElementById('title');
-    let validationNote = document.getElementById('title-validation');
-    if (title.value == '') {
-        validationNote.innerHTML = 'Please enter a title';
-    } else {
-        validationNote.innerHTML = '';
-        return title.value;
-    }
-}
-
-
-/**
- * Forces you to enter at least one character in the description field.
- * 
- * @returns the task's description.
- */
-function validateDescription() {
-    let description = document.getElementById('description');
-    let validationNote = document.getElementById('description-validation');
-    if (description.value == '') {
-        validationNote.innerHTML = 'Please enter a description'
-    } else {
-        validationNote.innerHTML = '';
-        return description.value;
-    }
-}
-
-
-/**
- * Forces you to pick a category.
- * 
- * @returns the task's category.
- */
-function validateCategory() {
-    let validationNote = document.getElementById('category-validation');
-    if (category == undefined) {
-        validationNote.innerHTML = 'Please select a category'
-    } else {
-        validationNote.innerHTML = ''
-        return category;
-    }
-}
-
-
-/**
- * @returns contacts that have been assigned to a task.
- */
-function validateAssignment() {
-    let assignment = [];
-    let selectedContacts = document.getElementById('assignment-options').querySelectorAll('img[src*="filled"]');
-    let validationNote = document.getElementById('assignment-validation');
-    if (selectedContacts.length == 0) {
-        validationNote.innerHTML = 'Please select at least one contact'
-    } else {
-        validationNote.innerHTML = '';
-        selectedContacts.forEach(selectedContact => assignment.push(selectedContact.previousElementSibling.innerHTML));
-        return assignment;
-    }
-}
-
-
-/**
- * @returns value of the prio.
- */
-function validatePrio() {
-    let validationNote = document.getElementById('prio-validation');
-    if (prio == undefined) {
-        validationNote.innerHTML = 'Please pick a prio';
-    } else {
-        validationNote.innerHTML = '';
-        return prio;
-    }
-}
+let subtasks = [];
 
 
 /**
@@ -105,7 +25,7 @@ function selectCategory(value, src) {
 
 
 /**
- * Creates a new category
+ * Creates a new category.
  */
 function createCategory() {
     oldDropdown = document.getElementById('category');
@@ -128,7 +48,7 @@ function createCategory() {
  * @param {Element} newInput 
  */
 function changeDropdownToInput(categoryBox, oldDropdown, newInput) {
-    categoryBox.classList.replace('dropdown', 'input-category-parent');
+    categoryBox.classList.replace('dropdown', 'input-parent');
     categoryBox.onclick = null;
     oldDropdown.replaceWith(newInput);
 }
@@ -142,7 +62,7 @@ function changeDropdownToInput(categoryBox, oldDropdown, newInput) {
  */
 function setCategoryAttributes(element, idValue) {
     element.setAttribute('id', `input-${idValue}`);
-    element.setAttribute('class', `input-${idValue}`);
+    element.setAttribute('class', `input-next-to-button`);
     element.setAttribute('type', 'text');
     element.setAttribute('placeholder', 'New category name');
 }
@@ -152,14 +72,30 @@ function setCategoryAttributes(element, idValue) {
  * Shows dropdown if you cancel the category cretion process.
  */
 function cancelNewCategory() {
+    revertCategoryBox();
+    hideColorPalette();
+    validationMessage('category', '');
+}
+
+
+/**
+ * Reverts the input for a new category back to a dropdown.
+ */
+function revertCategoryBox() {
     let categoryBox = document.getElementById(`category-box`);
-    let colors = document.getElementById('colors');
-    let validationNote = document.getElementById('category-validation');
-    categoryBox.classList.replace('input-category-parent', 'dropdown');
+    categoryBox.classList.replace('input-parent', 'dropdown');
     categoryBox.replaceChildren(oldDropdown);
     categoryBox.setAttribute('onclick', 'toggleDropdown("category")');
-    colors.innerHTML = '';
-    validationNote.innerHTML = '';
+}
+
+
+/**
+ * Hides the color palette.
+ */
+function hideColorPalette() {
+    let colorPalette = document.getElementById('colors');
+    colorPalette.classList.remove('colors');
+    colorPalette.innerHTML = '';
 }
 
 
@@ -173,24 +109,6 @@ function addNewCategory() {
         validationNote.innerHTML = 'Please choose a category name';
     } else {
         validateColor(validationNote, newCategoryName);
-    }
-}
-
-
-/**
- * Forces you to pick exactly one color.
- * 
- * @param {String} validationNote 
- * @param {String} newCategoryName 
- */
-function validateColor(validationNote, newCategoryName) {
-    if (currentColor == undefined) {
-        validationNote.innerHTML = 'Please pick a color';
-    } else {
-        cancelNewCategory();
-        insertCategoryToDropdown(newCategoryName);
-        currentColor = undefined;
-        validationNote.innerHTML = '';
     }
 }
 
@@ -213,10 +131,12 @@ function insertCategoryToDropdown(newCategoryName) {
  */
 function createColors() {
     let colorPalette = document.getElementById('colors');
+    colorPalette.classList.add('colors');
     for (let c = 0; c < allColors.length; c++) {
         const color = allColors[c];
-        colorPalette.innerHTML += colorTemplate();
+        colorPalette.innerHTML += colorTemplate(color);
     }
+
 }
 
 
@@ -252,28 +172,29 @@ function disableRemainingColors(color, defaultColor) {
 
 
 /**
- * @param {String} newCategoryName 
- * @param {String} lowNewCategoryName 
- * @returns HTML template of newly created category.
+ * Toggles checkbox when clicking on an Element.
+ * 
+ * @param {String} id 
  */
-function newCategoryTemplate(newCategoryName, lowNewCategoryName) {
-    return /*html*/`
-        <div id="${lowNewCategoryName}" onclick="selectCategory('${lowNewCategoryName}')">
-        ${newCategoryName} <img src="${currentColor}">
-        </div>
-    `;
+function toggleCheckbox(id) {
+    let selectedItem = document.getElementById(id);
+    let protocol = window.location.protocol;
+    let host = window.location.host;
+    if (selectedItem.lastElementChild.src == `${protocol}//${host}/assets/img/unchecked-checkbox.png`) {
+        selectedItem.lastElementChild.src = `assets/img/filled-checkbox.png`;
+    } else {
+        selectedItem.lastElementChild.src = `assets/img/unchecked-checkbox.png`;
+    }
 }
 
 
-function selectContact(id) {
-    let selectedContact = document.getElementById(id);
-    let protocol = window.location.protocol;
-    let host = window.location.host;
-    if (selectedContact.lastElementChild.src == `${protocol}//${host}/assets/img/unchecked-checkbox.png`) {
-        selectedContact.lastElementChild.src = `assets/img/filled-checkbox.png`;
-    } else {
-        selectedContact.lastElementChild.src = `assets/img/unchecked-checkbox.png`;
-    }
+/**
+ * Prevents picking a date which lies in the past.
+ */
+function setMinDate() {
+    let datePicker = document.getElementById('date');
+    let currentDate = new Date().toISOString().split('T')[0];
+    datePicker.setAttribute('min', currentDate);
 }
 
 
@@ -354,6 +275,32 @@ function changeImageOnHover(id, url) {
 
 
 /**
+ * Adds a subtask below it's input field.
+ */
+function addSubtask() {
+    let subtaskInput = document.getElementById('subtask-input');
+    let subtaskList = document.getElementById('subtask-list');
+    if (!subtaskInput.value == '') {
+        subtaskList.innerHTML += subtaskTemplate(subtaskInput.value);
+        subtasks.push(subtaskInput.value);
+        subtaskInput.value = '';
+    }
+}
+
+
+/**
+ * Deletes a subtask.
+ * 
+ * @param {String} id 
+ */
+function deleteSubtask(id) {
+    let subtask = document.getElementById(id);
+    subtasks.splice(subtask.value, 1);
+    subtask.remove();
+}
+
+
+/**
  * Either shows or hides selectable categories/contacts to assign to in the task form.
  * 
  * @param {String} id 
@@ -368,4 +315,16 @@ function toggleDropdown(id) {
         dropdownOptions.previousElementSibling.classList.remove('rotate-arrow');
     }
     toggleClass(id, 'dropdown-active');
+}
+
+
+/**
+ * Shows a message if a required field is empty.
+ * 
+ * @param {String} id 
+ * @param {String} message 
+ */
+function validationMessage(id, message) {
+    let validationMessage = document.getElementById(`${id}-validation`);
+    validationMessage.innerHTML = message;
 }

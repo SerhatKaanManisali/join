@@ -33,7 +33,7 @@
                             </div>
                         </button>
                     </div>
-                    <div id="colors" class="colors"></div>
+                    <div id="colors"></div>
                     <span id="category-validation" class="validation-note"></span>
                 </div>
                 <div class="form-item">
@@ -43,11 +43,11 @@
                             <span>Select contacts to assign</span>
                             <img src="assets/img/dropdow-arrow.png">
                             <div id="assignment-options" class="dropdown-content collapse">
-                                <div id="you" onclick="selectContact('you')">
+                                <div id="you" onclick="toggleCheckbox('you'); doNotClose(event)">
                                     <span>You</span>
                                     <img src="assets/img/unchecked-checkbox.png">
                                 </div>
-                                <div id="maximilian-vogel" onclick="selectContact('maximilian-vogel')">
+                                <div id="maximilian-vogel" onclick="toggleCheckbox('maximilian-vogel'); doNotClose(event)">
                                     <span>Maximilian Vogel</span>
                                     <img src="assets/img/unchecked-checkbox.png">
                                 </div>
@@ -66,7 +66,7 @@
                     <div class="form-item">
                         <span>Due date</span>
                         <input id="date" class="date-input" type="date">
-                        <span id="date-validation" class="validation-note "></span>
+                        <span id="date-validation" class="validation-note"></span>
                     </div>
                     <div class="form-item">
                         <span>Prio</span>
@@ -88,13 +88,18 @@
                     </div>
                     <div class="form-item">
                         <span>Subtasks</span>
-                        <input id="subtask" class="form-element" type="text" placeholder="Add new subtask">
+                        <div class="input-parent">
+                            <input id="subtask-input" class="input-next-to-button" type="text" placeholder="Add new subtask">
+                            <img class="cursor-pointer scale-on-hover" onclick="addSubtask()" src="assets/img/plus-icon.png">
+                        </div>
+                        <div id="subtask-list" class="subtask-list"></div>
                     </div>
                 </div>
                 <div class="form-buttons">
                     <button id="clear-button" class="clear-button" type="reset"
-                        onmouseenter="changeImageOnHover('clear-button', 'assets/img/hover-cross.png')"
-                        onmouseleave="changeImageOnHover('clear-button', 'assets/img/default-cross.png')">
+                    onclick="clearForm()"
+                    onmouseenter="changeImageOnHover('clear-button', 'assets/img/hover-cross.png')"
+                    onmouseleave="changeImageOnHover('clear-button', 'assets/img/default-cross.png')">
                         Clear
                         <img src="assets/img/default-cross.png">
                     </button>

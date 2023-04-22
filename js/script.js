@@ -11,6 +11,7 @@ async function init(id) {
     await loadTask();
     await includeHTML();
     changeHighlight(id);
+    setMinDate();
 }
 
 
@@ -33,16 +34,15 @@ async function includeHTML() {
 
 
 /**
- * Adds a task which is also visible to other users later on.
+ * Adds a task to the board after validating.
  */
 function addTask() {
     let validationNotes = document.getElementsByClassName('validation-note');
     validateForm();
-    taskTemplate();
     if (validateForm().length == validationNotes.length) {
-        saveTask(task);
+        saveTask(taskTemplate());
     }
-    }
+}
 
 
 /**
@@ -67,6 +67,9 @@ async function loadTask() {
 }
 
 
+/**
+ * @returns arry including all empty validation notes.
+ */
 function validateForm() {
     let validationNotes = document.getElementsByClassName('validation-note');
     let result = [];
@@ -104,4 +107,14 @@ function changeHighlight(id) {
     let newActive = document.getElementById(id);
     newActive.classList.add('active');
     newActive.firstElementChild.src = `assets/img/${id}-icon-white.png`;
+}
+
+
+/**
+ * Prevents an event from happening.
+ * 
+ * @param {Event} event 
+ */
+function doNotClose(event) {
+    event.stopPropagation()
 }

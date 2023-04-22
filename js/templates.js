@@ -7,9 +7,9 @@ function taskTemplate() {
         'description': validateDescription(),
         'category': validateCategory(),
         'assignment': validateAssignment(),
-        'date': date,
+        'date': validateDate(),
         'prio': validatePrio(),
-        'subtask': subtask
+        'subtask': subtasks
     }
     return task;
 }
@@ -22,9 +22,9 @@ function taskTemplate() {
 function createCategoryTemplate() {
     return /*html*/`
         <div class="create-category-buttons">
-            <img class="cursor-pointer" src="assets/img/black-cross.png" onclick="cancelNewCategory()">
+            <img class="cursor-pointer scale-on-hover" src="assets/img/black-cross.png" onclick="cancelNewCategory()">
             <img src="assets/img/vertical-line.png">
-            <img class="cursor-pointer" src="assets/img/black-check.png" onclick="addNewCategory()">
+            <img class="cursor-pointer scale-on-hover" src="assets/img/black-check.png" onclick="addNewCategory()">
         </div>
     `;
 }
@@ -33,8 +33,35 @@ function createCategoryTemplate() {
 /**
  * @returns HTML for a color when rendering the color palette. 
  */
-function colorTemplate() {
+function colorTemplate(color) {
     return /*html*/`
         <img id="${color}" onclick="pickColor('${color}')" src="${color}">
+    `;
+}
+
+
+/**
+ * @param {String} newCategoryName 
+ * @param {String} lowNewCategoryName 
+ * @returns HTML template of newly created category.
+ */
+function newCategoryTemplate(newCategoryName, lowNewCategoryName) {
+    return /*html*/`
+        <div id="${lowNewCategoryName}" onclick="selectCategory('${lowNewCategoryName}')">
+        ${newCategoryName} <img src="${currentColor}">
+        </div>
+    `;
+}
+
+
+/**
+ * @returns subtask's HTML.
+ */
+function subtaskTemplate(subtaskInput) {
+    return /*html*/`
+        <div id="${subtaskInput}">
+            <img onclick="deleteSubtask('${subtaskInput}')" src="assets/img/unchecked-checkbox.png">
+            ${subtaskInput}
+        </div>
     `;
 }

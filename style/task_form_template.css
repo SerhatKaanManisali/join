@@ -62,13 +62,14 @@ form {
 }
 
 .validation-note {
+    display: block;
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
     color: red;
+    margin-top: 10px;
 }
 
 .date-input {
-    display: flex;
     width: 428px;
     padding: 13px;
     border-radius: 10px;
@@ -238,11 +239,10 @@ form {
 }
 
 .cursor-pointer {
-    height: 14px;
     cursor: pointer;
 }
 
-.input-category {
+.input-next-to-button {
     outline: none;
     border: none;
     font-size: 18px;
@@ -251,7 +251,7 @@ form {
     border-radius: 1px;
 }
 
-.input-category-parent {
+.input-parent {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -261,6 +261,7 @@ form {
     border: 1px solid #D1D1D1;
     font-size: 18px;
     margin-top: 8px;
+    height: 49px;
 }
 
 .colors {
@@ -282,4 +283,23 @@ form {
     transform: scale(1.1);
     border-radius: 100%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.subtask-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 5px;
+}
+
+.subtask-list div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.subtask-list img {
+    height: 13px;
+    width: 13px;
+    cursor: pointer;
 }
