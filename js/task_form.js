@@ -8,6 +8,44 @@ let subtasks = [];
 
 
 /**
+ * Adds a task to the board after validating.
+ */
+function addTask() {
+    let clearButton = document.getElementById('clear-button');
+    let validationNotes = document.getElementsByClassName('validation-note');
+    let task = taskTemplate();
+    if (validateForm().length == validationNotes.length) {
+        saveTask(task);
+        clearButton.click();
+        toggleClass('new-task-confirmation', 'confirmation-animation');
+        transitionToPage('board.html');
+    }
+}
+
+
+/**
+ * Saves the task which has been recently added on the server.
+ * 
+ * @param {JSON} task 
+ */
+async function saveTask(task) {
+    allTasks.push(task);
+    let allTasksAsText = JSON.stringify(allTasks);
+    await backend.setItem('allTasks', allTasksAsText);
+}
+
+
+/**
+ * Loads all Tasks which are stored from the server.
+ */
+async function loadTask() {
+    await downloadFromServer();
+    let loadedTasks = JSON.parse(backend.getItem('allTasks'));
+    allTasks = loadedTasks || [];
+}
+
+
+/**
  * Selects category from dropdown.
  * 
  * @param {String} value 

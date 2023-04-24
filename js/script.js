@@ -34,40 +34,6 @@ async function includeHTML() {
 
 
 /**
- * Adds a task to the board after validating.
- */
-function addTask() {
-    let validationNotes = document.getElementsByClassName('validation-note');
-    let task = taskTemplate();
-    if (validateForm().length == validationNotes.length) {
-        saveTask(task);
-    }
-}
-
-
-/**
- * Saves the task which has been recently added on the server.
- * 
- * @param {JSON} task 
- */
-async function saveTask(task) {
-    allTasks.push(task);
-    let allTasksAsText = JSON.stringify(allTasks);
-    await backend.setItem('allTasks', allTasksAsText);
-}
-
-
-/**
- * Loads all Tasks which are stored from the server.
- */
-async function loadTask() {
-    await downloadFromServer();
-    let loadedTasks = JSON.parse(backend.getItem('allTasks'));
-    allTasks = loadedTasks || [];
-}
-
-
-/**
  * Toggle class of an element. 
  * e.g. Let log out button appear and disappear by clicking on the profile icon.
  * id = log-out-button; className = hide;

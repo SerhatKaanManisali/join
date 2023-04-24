@@ -148,6 +148,10 @@ function clearCategory() {
 function clearAssignment() {
     let assignedContacts = document.getElementById('assignment-options').querySelectorAll('img[src*="filled"]');
     assignedContacts.forEach(assignedContact => assignedContact.src = 'assets/img/unchecked-checkbox.png');
+    let assignment = document.getElementById('assignment');
+    if (assignment.classList.contains('dropdown-active')) {
+        toggleDropdown('assignment');
+    }
 }
 
 
