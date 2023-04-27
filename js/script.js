@@ -1,6 +1,3 @@
-let allTasks = [];
-
-
 /**
  * Initialize certain functions when page is loaded.
  * 
@@ -68,4 +65,14 @@ function changeHighlight(id) {
  */
 function doNotClose(event) {
     event.stopPropagation()
+}
+
+
+/**
+ * Calls a page.
+ * 
+ * @param {String} url 
+ */
+function swapPage(url) {
+    window.location = url;
 }

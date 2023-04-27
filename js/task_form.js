@@ -1,3 +1,6 @@
+const STORAGE_TOKEN = 'TCAWZIOJMRESTMBP7O1RSEW3GLLEFAJIXAFI0XQP';
+const STORAGE_URL = 'https://remote-storage.developerakademie.org/item'
+let allTasks = [];
 let oldCategoryDropdown;
 let category;
 let allColors = ["assets/img/lightblue-circle.png", "assets/img/red-circle.png", "assets/img/green-circle.png", "assets/img/orange-circle.png", "assets/img/pink-circle.png", "assets/img/blue-circle.png"];
@@ -18,20 +21,19 @@ function addTask() {
         saveTask(task);
         clearButton.click();
         toggleClass('new-task-confirmation', 'confirmation-animation');
-        transitionToPage('board.html');
+        swapPage('board.html');
     }
 }
 
 
 /**
- * Saves the task which has been recently added on the server.
+ * Saves the recently added task.
  * 
  * @param {JSON} task 
  */
 async function saveTask(task) {
     allTasks.push(task);
-    let allTasksAsText = JSON.stringify(allTasks);
-    await backend.setItem('allTasks', allTasksAsText);
+    setItem('allTasks', allTasks);
 }
 
 
@@ -39,9 +41,33 @@ async function saveTask(task) {
  * Loads all Tasks which are stored from the server.
  */
 async function loadTask() {
-    await downloadFromServer();
-    let loadedTasks = JSON.parse(backend.getItem('allTasks'));
-    allTasks = loadedTasks || [];
+    return allTasks = getItem('allTasks') || [];
+}
+
+
+/**
+ * Sets an item in backend.
+ * 
+ * @param {String} key 
+ * @param {Value} value 
+ * @returns Item to be set in backend.
+ */
+async function setItem(key, value) {
+    const payload = {key, value, token: STORAGE_TOKEN};
+    return fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)})
+    .then(res => res.json());
+}
+
+
+/**
+ * Requests an item from backend.
+ * 
+ * @param {String} key 
+ * @returns response from backend as JSON.
+ */
+async function getItem(key) {
+    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+    return fetch(url).then(res => res.json());
 }
 
 
