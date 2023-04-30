@@ -4,7 +4,6 @@ let allTasks = [];
 let oldCategoryDropdown;
 let category;
 let allColors = ["assets/img/lightblue-circle.png", "assets/img/red-circle.png", "assets/img/green-circle.png", "assets/img/orange-circle.png", "assets/img/pink-circle.png", "assets/img/blue-circle.png"];
-let currentColor;
 let activeColor;
 let activePrio;
 let subtasks = [];
@@ -21,7 +20,9 @@ function addTask() {
         saveTask(task);
         clearButton.click();
         toggleClass('new-task-confirmation', 'confirmation-animation');
-        swapPage('board.html');
+        setTimeout(() => {
+            window.location = 'board.html'
+        }, 1250);
     }
 }
 
@@ -41,7 +42,7 @@ async function saveTask(task) {
  * Loads all Tasks which are stored from the server.
  */
 async function loadTask() {
-    return allTasks = getItem('allTasks') || [];
+    allTasks = getItem('allTasks') || [];
 }
 
 
@@ -99,7 +100,7 @@ function createCategory() {
     setNewInputAttributes(newInput, oldId);
     categoryBox.innerHTML += createCategoryTemplate();
     createColors();
-    currentColor = undefined;
+    activeColor = undefined;
 }
 
 
@@ -283,18 +284,6 @@ function changePrioImage(urgency) {
     } else {
         button.firstElementChild.src = `assets/img/active-${urgency}.png`
     }
-}
-
-
-/**
- * Changes image on hover so the color of the image matches it's parent element's hover effects.
- * 
- * @param {String} id 
- * @param {String} url 
- */
-function changeImageOnHover(id, url) {
-    let button = document.getElementById(id);
-    button.firstElementChild.src = url;
 }
 
 

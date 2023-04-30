@@ -69,10 +69,12 @@ function doNotClose(event) {
 
 
 /**
- * Calls a page.
+ * Changes image on hover so the color of the image matches it's parent element's hover effects.
  * 
+ * @param {String} id 
  * @param {String} url 
  */
-function swapPage(url) {
-    window.location = url;
+function changeImageOnHover(id, url) {
+    let button = document.getElementById(id);
+    button.src = url;
 }

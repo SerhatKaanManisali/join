@@ -115,7 +115,7 @@ function validateColor(validationNote, newCategoryName) {
     } else {
         cancelNewCategory();
         insertCategoryToDropdown(newCategoryName);
-        currentColor = undefined;
+        activeColor = undefined;
         validationNote.innerHTML = '';
     }
 }
