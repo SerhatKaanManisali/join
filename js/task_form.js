@@ -1,5 +1,3 @@
-const STORAGE_TOKEN = 'TCAWZIOJMRESTMBP7O1RSEW3GLLEFAJIXAFI0XQP';
-const STORAGE_URL = 'https://remote-storage.developerakademie.org/item'
 let allTasks = [];
 let oldCategoryDropdown;
 let category;
@@ -12,17 +10,17 @@ let subtasks = [];
 /**
  * Adds a task to the board after validating.
  */
-function addTask() {
+async function addTask() {
     let clearButton = document.getElementById('clear-button');
     let validationNotes = document.getElementsByClassName('validation-note');
     let task = taskTemplate();
     if (validateForm().length == validationNotes.length) {
-        saveTask(task);
+        await saveTask(task);
         clearButton.click();
         toggleClass('new-task-confirmation', 'confirmation-animation');
-        setTimeout(() => {
-            window.location = 'board.html'
-        }, 1250);
+        // setTimeout(() => {
+        //     window.location = 'board.html'
+        // }, 1250);
     }
 }
 
@@ -34,7 +32,7 @@ function addTask() {
  */
 async function saveTask(task) {
     allTasks.push(task);
-    setItem('allTasks', allTasks);
+    await setItem('allTasks', allTasks);
 }
 
 
@@ -42,33 +40,13 @@ async function saveTask(task) {
  * Loads all Tasks which are stored from the server.
  */
 async function loadTask() {
-    allTasks = getItem('allTasks') || [];
-}
-
-
-/**
- * Sets an item in backend.
- * 
- * @param {String} key 
- * @param {Value} value 
- * @returns Item to be set in backend.
- */
-async function setItem(key, value) {
-    const payload = {key, value, token: STORAGE_TOKEN};
-    return fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)})
-    .then(res => res.json());
-}
-
-
-/**
- * Requests an item from backend.
- * 
- * @param {String} key 
- * @returns response from backend as JSON.
- */
-async function getItem(key) {
-    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
-    return fetch(url).then(res => res.json());
+    try {
+        tasks = await getItem('allTasks');
+        formattedTasks = tasks.replace(/'/g, '"');
+        allTasks = JSON.parse(formattedTasks);
+    } catch(error) {
+        console.error('Loading error:', error);
+    }
 }
 
 

@@ -1,10 +1,13 @@
+const STORAGE_TOKEN = '0LRDMENFQHGT3T6GNZNOCLAGNN9YHFH9IH4V2A06';
+const STORAGE_URL = 'https://remote-storage.developerakademie.org/item'
+
+
 /**
  * Initialize certain functions when page is loaded.
  * 
  * @param {String} id 
  */
 async function init(id) {
-    setURL('https://gruppe-525.developerakademie.net/smallest_backend_ever');
     await loadTask();
     await includeHTML();
     changeHighlight(id);
@@ -27,6 +30,36 @@ async function includeHTML() {
             element.innerHTML = 'Page not found';
         }
     }
+}
+
+
+/**
+ * Sets an item in backend.
+ * 
+ * @param {String} key 
+ * @param {Value} value 
+ * @returns Item to be set in backend.
+ */
+async function setItem(key, value) {
+    const payload = {key, value, token: STORAGE_TOKEN};
+    return fetch(STORAGE_URL, {method: 'POST', body: JSON.stringify(payload)})
+    .then(res => res.json());
+}
+
+
+/**
+ * Requests an item from backend.
+ * 
+ * @param {String} key 
+ * @returns response from backend as JSON.
+ */
+async function getItem(key) {
+    const url = `${STORAGE_URL}?key=${key}&token=${STORAGE_TOKEN}`;
+    return fetch(url).then(res => res.json()).then(res => {
+        if(res.data) {
+            return res.data.value;
+        } throw `Could not find date with key "${key}".`;
+    });
 }
 
 
