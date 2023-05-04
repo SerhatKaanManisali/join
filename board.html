@@ -19,7 +19,7 @@
     <script src="js/board.js"></script>
 </head>
 
-<body onload="init('board')">
+<body onload="initBoard()">
     <div w3-include-html="assets/templates/desktop_template.html"></div>
     <div w3-include-html="assets/templates/mobile_template.html"></div>
     <div class="content-margin">
@@ -45,25 +45,7 @@
                         onmouseleave="changeImageOnHover('add-to-do', 'assets/img/plus-button.png')"
                         src="assets/img/plus-button.png">
                 </div>
-                <div class="task-card">
-                    <h3>Design</h3>
-                    <h4>Website redesign</h4>
-                    <p>Modify the contents of the main website...</p>
-                    <div class="progress">
-                        <div id="empty-bar">
-                            <div id="filled-bar"></div>
-                        </div>
-                        <span>1/2 Done</span>
-                    </div>
-                    <div class="symbols">
-                        <div class="assignment">
-                            <p style="background-color: #0190E0; top: -18px;">SM</p>
-                            <p style="background-color: #EE00D6; top: -18px; left: 31px;">MV</p>
-                            <p style="background-color: #02CF2F; top: -18px; left: 62px;">EF</p>
-                        </div>
-                        <img src="assets/img/default-low.png">
-                    </div>
-                </div>
+                <div id="to-do-list" class="task-list"></div>
             </div>
             <div class="column">
                 <div class="head">

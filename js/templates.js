@@ -9,9 +9,27 @@ function taskTemplate() {
         'assignment': validateAssignment(),
         'date': validateDate(),
         'prio': validatePrio(),
-        'subtask': subtasks
+        'subtask': allSubtasks
     }
     return task;
+}
+
+
+/**
+ * Template for a category in the dropdown.
+ * 
+ * @param {String} categoryName 
+ * @param {String} highCategoryName 
+ * @param {String} rgb 
+ * @returns 
+ */
+function categoryTemplate(categoryName, highCategoryName, rgb) {
+    return /*html*/`
+        <div id="${categoryName}" onclick="selectCategory('${categoryName}', '${rgb}">
+            ${highCategoryName}
+            <span class="default-color" style="background-color: ${rgb}"></span>
+        </div>
+    `;
 }
 
 
@@ -35,7 +53,7 @@ function createCategoryTemplate() {
  */
 function colorTemplate(color) {
     return /*html*/`
-        <img id="${color}" onclick="pickColor('${color}')" src="${color}">
+        <span id="${color}" class="default-color" onclick="pickColor('${color}')" style="background-color: ${color}"></span>
     `;
 }
 
@@ -48,7 +66,7 @@ function colorTemplate(color) {
 function newCategoryTemplate(newCategoryName, lowNewCategoryName) {
     return /*html*/`
         <div id="${lowNewCategoryName}" onclick="selectCategory('${lowNewCategoryName}')">
-        ${newCategoryName} <img src="${activeColor.src}">
+        ${newCategoryName} <span class="default-color" style="background-color: ${activeColor.style.backgroundColor}"></span>
         </div>
     `;
 }
@@ -62,6 +80,32 @@ function subtaskTemplate(subtaskInput) {
         <div id="${subtaskInput}">
             <img onclick="deleteSubtask('${subtaskInput}')" src="assets/img/unchecked-checkbox.png">
             ${subtaskInput}
+        </div>
+    `;
+}
+
+
+
+function taskCardTemplate(category, rgb, description, prio, title) {
+    return /*html*/`
+        <div class="task-card">
+            <h3 style="background-color: ${rgb}">${category}</h3>
+            <h4>${title}</h4>
+            <p>${description}</p>
+            <div class="progress">
+                <div id="empty-bar">
+                    <div id="filled-bar"></div>
+                </div>
+                <span>1/2 Done</span>
+            </div>
+            <div class="symbols">
+                <div class="assignment">
+                    <p style="background-color: #0190E0; top: -18px;">SM</p>
+                    <p style="background-color: #EE00D6; top: -18px; left: 31px;">MV</p>
+                    <p style="background-color: #02CF2F; top: -18px; left: 62px;">EF</p>
+                </div>
+                <img src="assets/img/default-low.png">
+            </div>
         </div>
     `;
 }

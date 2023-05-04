@@ -11,7 +11,6 @@ async function init(id) {
     await loadTask();
     await includeHTML();
     changeHighlight(id);
-    setMinDate();
 }
 
 
@@ -110,4 +109,11 @@ function doNotClose(event) {
 function changeImageOnHover(id, url) {
     let button = document.getElementById(id);
     button.src = url;
+}
+
+
+
+function capitalizeFirstCharacter(name) {
+    let result = name.charAt(0).toUpperCase() + name.slice(1);
+    return result;
 }

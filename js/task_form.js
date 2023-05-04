@@ -1,10 +1,36 @@
 let allTasks = [];
+let allSubtasks = [];
+let allColors = [];
+let pickableColors = ["#8AA4FF", "#FF0000", "#2AD300", "#FF8A00", "#E200BE", "#0038FF"];
 let oldCategoryDropdown;
-let category;
-let allColors = ["assets/img/lightblue-circle.png", "assets/img/red-circle.png", "assets/img/green-circle.png", "assets/img/orange-circle.png", "assets/img/pink-circle.png", "assets/img/blue-circle.png"];
 let activeColor;
 let activePrio;
-let subtasks = [];
+let category;
+
+
+/**
+ * Initiates certain functions as soon as add_task.html loads.
+ */
+async function initTaskForm() {
+    await init('add-task');
+    renderCategories();
+    setMinDate();
+    // renderContacts();
+}
+
+
+/**
+ * Renders the available/previously saved categories
+ */
+function renderCategories() {
+    let categoryDropdown = document.getElementById('category-options');
+    for (let i = 0; i < allTasks.length; i++) {
+        const categoryName = allTasks[i]['category']['name'];
+        const highCategoryName = capitalizeFirstCharacter(categoryName);
+        const rgb = allTasks[i]['category']['rgb'];
+        categoryDropdown.innerHTML += categoryTemplate(categoryName, highCategoryName, rgb);
+    }
+}
 
 
 /**
@@ -18,9 +44,9 @@ async function addTask() {
         await saveTask(task);
         clearButton.click();
         toggleClass('new-task-confirmation', 'confirmation-animation');
-        // setTimeout(() => {
-        //     window.location = 'board.html'
-        // }, 1250);
+        setTimeout(() => {
+            window.location = 'board.html'
+        }, 1250);
     }
 }
 
@@ -55,10 +81,10 @@ async function loadTask() {
  * 
  * @param {String} value 
  */
-function selectCategory(value, src) {
+function selectCategory(value, rgb) {
     category = {
         'name': value,
-        'image': src
+        'rgb': rgb
     };
     let selectedByDefault = document.getElementById('selected-by-default');
     let selectedCategory = document.getElementById(value);
@@ -164,7 +190,7 @@ function insertCategoryToDropdown(newCategoryName) {
     let addCategoryButton = document.getElementById('new-category');
     let lowNewCategoryName = newCategoryName.toLowerCase();
     addCategoryButton.insertAdjacentHTML('afterend', newCategoryTemplate(newCategoryName, lowNewCategoryName));
-    selectCategory(lowNewCategoryName, activeColor);
+    selectCategory(lowNewCategoryName, activeColor.style.backgroundColor);
 }
 
 
@@ -174,8 +200,8 @@ function insertCategoryToDropdown(newCategoryName) {
 function createColors() {
     let colorPalette = document.getElementById('colors');
     colorPalette.classList.add('colors');
-    for (let c = 0; c < allColors.length; c++) {
-        const color = allColors[c];
+    for (let c = 0; c < pickableColors.length; c++) {
+        const color = pickableColors[c];
         colorPalette.innerHTML += colorTemplate(color);
     }
 
@@ -273,7 +299,7 @@ function addSubtask() {
     let subtaskList = document.getElementById('subtask-list');
     if (!subtaskInput.value == '') {
         subtaskList.innerHTML += subtaskTemplate(subtaskInput.value);
-        subtasks.push(subtaskInput.value);
+        allSubtasks.push(subtaskInput.value);
         subtaskInput.value = '';
     }
 }
@@ -286,8 +312,8 @@ function addSubtask() {
  */
 function deleteSubtask(id) {
     let subtask = document.getElementById(id)
-    let index = subtasks.indexOf(id);
-    subtasks.splice(index, 1);
+    let index = allSubtasks.indexOf(id);
+    allSubtasks.splice(index, 1);
     subtask.remove();
 }
 
