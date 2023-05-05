@@ -112,8 +112,20 @@ function changeImageOnHover(id, url) {
 }
 
 
-
+/**
+ * Capitalizes first character of a String.
+ * 
+ * @param {String} name 
+ * @returns capitalized string
+ */
 function capitalizeFirstCharacter(name) {
     let result = name.charAt(0).toUpperCase() + name.slice(1);
     return result;
+}
+
+
+
+function formatDate(date) {
+    let datePieces = date.split("-");
+    return datePieces[2]+ "/" +datePieces[1]+ "/" +datePieces[0].substring(2);
 }
