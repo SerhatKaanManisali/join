@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,11 +16,44 @@
     <script src="js/task_form.js"></script>
     <script src="js/templates.js"></script>
     <script src="js/legal_notice.js"></script>
+    <script src="js/mini_backend.js"></script>
+
+    <style>
+        .legal {
+            left: 18%;
+            position: absolute;
+            top: 20%;
+            width: 70%;
+        }
+
+    
+    </style>
+    
 </head>
+
 <body onload="init('legal-notice')">
 
     <div w3-include-html="assets/templates/desktop_template.html"></div>
     <div w3-include-html="assets/templates/mobile_template.html"></div>
-    
+    <div class="legal">
+        <div>
+            <h1>Legal Notice</h1>
+            <h3>Subtitle</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque odio felis, iaculis ut massa eget,
+                ornare lacinia urna. In dignissim justo eu velit sagittis, in scelerisque nulla convallis. Vestibulum
+                eros lorem, sollicitudin eget eros non, varius aliquam mauris. Sed turpis ipsum, condimentum quis nulla
+                at, lobortis facilisis ipsum. Nunc erat justo, hendrerit vel enim vitae, feugiat mattis dui. In auctor
+                dignissim luctus. Mauris ornare ipsum at ultrices eleifend. Praesent tempus congue magna. Quisque libero
+                erat, pharetra a neque et, imperdiet semper justo.</p><br>
+            <h3>Subtitle</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque odio felis, iaculis ut massa eget,
+                ornare lacinia urna. In dignissim justo eu velit sagittis, in scelerisque nulla convallis. Vestibulum
+                eros lorem, sollicitudin eget eros non, varius aliquam mauris. Sed turpis ipsum, condimentum quis nulla
+                at, lobortis facilisis ipsum. Nunc erat justo, hendrerit vel enim vitae, feugiat mattis dui. In auctor
+                dignissim luctus. Mauris ornare ipsum at ultrices eleifend. Praesent tempus congue magna. Quisque libero
+                erat, pharetra a neque et, imperdiet semper justo.</p>
+        </div>
+    </div>
 </body>
+
 </html>
