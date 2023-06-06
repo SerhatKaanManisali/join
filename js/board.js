@@ -375,5 +375,10 @@ async function moveTo(status) {
 
 
 function highlight(id) {
-    toggleClass(id, 'heighlighted-dragged-area');
+    document.getElementById(id).classList.add('highlighted-dragged-area');
+}
+
+
+function removeHighlight(id) {
+    document.getElementById(id).classList.remove('highlighted-dragged-area');
 }

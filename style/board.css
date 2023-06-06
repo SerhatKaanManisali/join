@@ -379,6 +379,6 @@ h1 {
     transform: translate(-50%, -45%);
 }
 
-.heighlighted-dragged-area {
+.highlighted-dragged-area {
     background-color: rgba(0, 0, 0, 0.2);
 }
