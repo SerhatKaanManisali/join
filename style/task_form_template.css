@@ -3,13 +3,10 @@ h1 {
     font-size: 61px;
 }
 
-form {
-    max-width: 960px;
-}
-
 .task-form {
     font-size: 18px;
     display: flex;
+    width: 957px;
 }
 
 .column-left {
@@ -328,4 +325,10 @@ form {
 
 .confirmation-animation {
     bottom: 210px;
+}
+
+#assignment-box {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

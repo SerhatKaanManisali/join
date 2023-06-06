@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="style/mobile_template.css">
     <link rel="stylesheet" href="style/board.css">
     <link rel="stylesheet" href="style/fonts.css">
+    <link rel="stylesheet" href="style/task_form_template.css">
     <script src="js/script.js"></script>
     <script src="js/task_form.js"></script>
     <script src="js/clear_and_validate_form.js"></script>
@@ -27,11 +28,11 @@
             <h1>Board</h1>
             <div class="header-buttons">
                 <div class="search-bar">
-                    <input type="text" placeholder="Find task">
+                    <input id="search-field" type="text" placeholder="Find task" oninput="findTask()">
                     <img src="assets/img/vertical-line.png">
                     <img src="assets/img/search-icon.png">
                 </div>
-                <div class="add-task-button">
+                <div class="add-task-button" onclick="showTaskForm()">
                     <span>Add task</span>
                     <img src="assets/img/plus-icon-white.png">
                 </div>
@@ -41,37 +42,42 @@
             <div class="column">
                 <div class="head">
                     To do
-                    <img id="add-to-do" onmouseenter="changeImageOnHover('add-to-do', 'assets/img/hover-plus.png')"
+                    <img id="add-to-do" onclick="showTaskForm()"
+                        onmouseenter="changeImageOnHover('add-to-do', 'assets/img/hover-plus.png')"
                         onmouseleave="changeImageOnHover('add-to-do', 'assets/img/plus-button.png')"
                         src="assets/img/plus-button.png">
                 </div>
-                <div id="to-do-list" class="task-list"></div>
+                <div id="to-do-list" class="task-list" ondrop="moveTo('to do')" ondragover="allowDrop(event); toggleClass('to-do-list', 'heighlighted-dragged-area')"></div>
             </div>
             <div class="column">
                 <div class="head">
                     In progress
-                    <img id="add-in-progress"
+                    <img id="add-in-progress" onclick="showTaskForm()"
                         onmouseenter="changeImageOnHover('add-in-progress', 'assets/img/hover-plus.png')"
                         onmouseleave="changeImageOnHover('add-in-progress', 'assets/img/plus-button.png')"
                         src="assets/img/plus-button.png">
                 </div>
+                <div id="in-progress-list" class="task-list" ondrop="moveTo('in progress')" ondragover="allowDrop(event); toggleClass('in-progress-list', 'heighlighted-dragged-area')"></div>
             </div>
             <div class="column">
                 <div class="head">
                     Awaiting feedback
-                    <img id="add-awaiting-feedback"
+                    <img id="add-awaiting-feedback" onclick="showTaskForm()"
                         onmouseenter="changeImageOnHover('add-awaiting-feedback', 'assets/img/hover-plus.png')"
                         onmouseleave="changeImageOnHover('add-awaiting-feedback', 'assets/img/plus-button.png')"
                         src="assets/img/plus-button.png">
                 </div>
+                <div id="awaiting-feedback-list" class="task-list" ondrop="moveTo('awaiting feedback')" ondragover="allowDrop(event); toggleClass('awaiting-feedback-list', 'heighlighted-dragged-area')"></div>
             </div>
             <div class="column">
                 <div class="head">
                     Done
-                    <img id="add-done" onmouseenter="changeImageOnHover('add-done', 'assets/img/hover-plus.png')"
+                    <img id="add-done" onclick="showTaskForm()"
+                        onmouseenter="changeImageOnHover('add-done', 'assets/img/hover-plus.png')"
                         onmouseleave="changeImageOnHover('add-done', 'assets/img/plus-button.png')"
                         src="assets/img/plus-button.png">
                 </div>
+                <div id="done-list" class="task-list" ondrop="moveTo('done')" ondragover="allowDrop(event); toggleClass('done-list', 'heighlighted-dragged-area')"></div>
             </div>
         </div>
         <div id="detailed-task-box" class="hide"></div>

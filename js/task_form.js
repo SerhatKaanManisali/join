@@ -6,6 +6,7 @@ let oldCategoryDropdown;
 let activeColor;
 let activePrio;
 let category;
+let allCompletedSubtasks = [];
 
 
 /**
@@ -83,7 +84,7 @@ async function loadTask() {
  */
 function selectCategory(value, rgb) {
     category = {
-        'name': value,
+        'name': capitalizeFirstCharacter(value),
         'rgb': rgb
     };
     let selectedByDefault = document.getElementById('selected-by-default');
@@ -222,23 +223,6 @@ function pickColor(color) {
         toggleClass(activeColor.id, 'active-color');
         toggleClass(color, 'active-color');
         activeColor = colorPalette.querySelector('.active-color');
-    }
-}
-
-
-/**
- * Toggles checkbox when clicking on an Element.
- * 
- * @param {String} id 
- */
-function toggleCheckbox(id) {
-    let selectedItem = document.getElementById(id);
-    let protocol = window.location.protocol;
-    let host = window.location.host;
-    if (selectedItem.lastElementChild.src == `${protocol}//${host}/assets/img/unchecked-checkbox.png`) {
-        selectedItem.lastElementChild.src = `assets/img/filled-checkbox.png`;
-    } else {
-        selectedItem.lastElementChild.src = `assets/img/unchecked-checkbox.png`;
     }
 }
 

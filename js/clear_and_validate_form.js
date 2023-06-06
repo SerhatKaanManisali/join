@@ -64,13 +64,18 @@ function validateCategory() {
  * @returns contacts that have been assigned to a task.
  */
 function validateAssignment() {
-    let assignment = [];
     let selectedContacts = document.getElementById('assignment-options').querySelectorAll('img[src*="filled"]');
     if (selectedContacts.length == 0) {
         validationMessage('assignment', 'Please select at least one contact');
     } else {
         validationMessage('assignment');
-        selectedContacts.forEach(selectedContact => assignment.push(selectedContact.previousElementSibling.innerHTML));
+        let names = [];
+        selectedContacts.forEach(selectedContact => names.push(selectedContact.previousElementSibling.innerHTML));
+        names.sort();
+        let assignment = {
+            'names': names,
+            'colors': pickRandomColor(names)
+        };
         return assignment;
     }
 }

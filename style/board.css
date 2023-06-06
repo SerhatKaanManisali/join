@@ -99,6 +99,11 @@ h1 {
     gap: 35px;
     color: #2A3647;
     width: 100%;
+    min-width: 200px;
+    background-color: rgba(0, 0, 0, 0.1);
+    min-height: 242px;
+    border-radius: 20px;
+    border: 2px dashed rgba(0, 0, 0, 0.1);
 }
 
 .task-card {
@@ -206,12 +211,16 @@ h1 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -45%);
+    gap: 25px;
 }
 
 .detailed-task-content {
     display: flex;
     flex-direction: column;
     gap: 25px;
+    overflow: auto;
+    max-height: 700px;
+    min-width: 300px;
 }
 
 .detailed-task-content h2 {
@@ -260,6 +269,20 @@ h1 {
     margin: 0;
 }
 
+.detailed-subtask {
+    display: flex;
+    align-items: center;
+    margin-left: 14px;
+    gap: 40px;
+    font-size: 21px;
+}
+
+.detailed-subtask img {
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+
 .detailed-task-buttons {
     display: flex;
     flex-direction: column;
@@ -305,4 +328,57 @@ h1 {
 
 .edit-button:hover {
     background-color: #29ABE2;
+}
+
+#subtask-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.editable-task {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 700px;
+    min-width: 300px;
+    font-size: 18px;
+}
+
+.editable-task p {
+    margin: 0;
+}
+
+.confirm-button {
+    background-color: #2A3647;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 100ms ease-in-out;
+    padding: 18px 15px;
+    color: white;
+    gap: 10px;
+    font-size: 18px;
+}
+
+.confirm-button:hover {
+    cursor: pointer;
+    background-color: #29ABE2;
+}
+
+.task-form-overlay {
+    background-color: white;
+    padding: 50px;
+    display: flex;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+}
+
+.heighlighted-dragged-area {
+    background-color: rgba(0, 0, 0, 0.2);
 }
