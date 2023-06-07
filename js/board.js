@@ -30,10 +30,11 @@ function renderToDo() {
     let toDoList = document.getElementById('to-do-list');
     toDoList.innerHTML = '';
     for (let t = 0; t < toDos.length; t++) {
-        taskCardElements(t);
-        toDoList.innerHTML += taskCardTemplate(elements, t);
-        subTaskProgress(elements[6], elements[8], t);
-        renderAssignment(elements[0], t);
+        let index = allTasks.indexOf(toDos[t]);
+        taskCardElements(index);
+        toDoList.innerHTML += taskCardTemplate(elements, index);
+        subTaskProgress(elements[6], elements[8], index);
+        renderAssignment(elements[0], index);
     }
 }
 
@@ -44,10 +45,11 @@ function renderInProgress() {
     let inProgressList = document.getElementById('in-progress-list');
     inProgressList.innerHTML = '';
     for (let t = 0; t < inProgress.length; t++) {
-        taskCardElements(t);
-        inProgressList.innerHTML += taskCardTemplate(elements, t);
-        subTaskProgress(elements[6], elements[8], t);
-        renderAssignment(elements[0], t);
+        let index = allTasks.indexOf(inProgress[t]);
+        taskCardElements(index);
+        inProgressList.innerHTML += taskCardTemplate(elements, index);
+        subTaskProgress(elements[6], elements[8], index);
+        renderAssignment(elements[0], index);
     }
 }
 
@@ -58,10 +60,11 @@ function renderAwaitingFeedback() {
     let awaitingFeedbackList = document.getElementById('awaiting-feedback-list');
     awaitingFeedbackList.innerHTML = '';
     for (let t = 0; t < awaitingFeedback.length; t++) {
-        taskCardElements(t);
-        awaitingFeedbackList.innerHTML += taskCardTemplate(elements, t);
-        subTaskProgress(elements[6], elements[8], t);
-        renderAssignment(elements[0], t);
+        let index = allTasks.indexOf(awaitingFeedback[t]);
+        taskCardElements(index);
+        awaitingFeedbackList.innerHTML += taskCardTemplate(elements, index);
+        subTaskProgress(elements[6], elements[8], index);
+        renderAssignment(elements[0], index);
     }
 }
 
@@ -72,10 +75,11 @@ function renderDone() {
     let doneList = document.getElementById('done-list');
     doneList.innerHTML = '';
     for (let t = 0; t < done.length; t++) {
-        taskCardElements(t);
-        doneList.innerHTML += taskCardTemplate(elements, t);
-        subTaskProgress(elements[6], elements[8], t);
-        renderAssignment(elements[0], t);
+        let index = allTasks.indexOf(done[t]);
+        taskCardElements(index);
+        doneList.innerHTML += taskCardTemplate(elements, index);
+        subTaskProgress(elements[6], elements[8], index);
+        renderAssignment(elements[0], index);
     }
 }
 

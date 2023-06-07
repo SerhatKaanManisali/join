@@ -37,7 +37,7 @@
     text-align: center;
 }
 
-.summary-top-third div {
+.summary-top-third a {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -47,16 +47,18 @@
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
     transition: all 100ms ease-in-out;
     width: 200px;
+    text-decoration: none;
+    color: black;
 }
 
-.summary-top-third div:hover {
+.summary-top-third a:hover {
     background-color: #2A3647;
     color: white;
     cursor: pointer;
     transform: scale(1.05);
 }
 
-.summary-top-third div:hover h5 {
+.summary-top-third a:hover h5 {
     color: white;
 }
 
@@ -84,6 +86,8 @@
     border-radius: 30px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
     transition: all 100ms ease-in-out;
+    text-decoration: none;
+    color: black;
 }
 
 .summary-middle-third:hover {
@@ -124,9 +128,8 @@
     gap: 15px;
 }
 
-#upcoming-urgency {
+#upcoming-prio-image {
     border-radius: 100%;
-    background-color: #FF3D00;
     width: 60px;
     height: 60px;
     display: flex;
@@ -134,7 +137,7 @@
     align-items: center;
 }
 
-#upcoming-urgency img {
+#upcoming-prio-image img {
     width: 30px;
 }
 
@@ -192,6 +195,8 @@
     height: 150px;
     width: 50%;
     text-align: center;
+    text-decoration: none;
+    color: black;
 }
 
 .to-do-amount:hover {
@@ -222,6 +227,8 @@
     height: 150px;
     width: 50%;
     text-align: center;
+    text-decoration: none;
+    color: black;
 }
 
 .done-amount:hover {

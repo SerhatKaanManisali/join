@@ -12,13 +12,14 @@
     <link rel="stylesheet" href="style/mobile_template.css">
     <link rel="stylesheet" href="style/summary.css">
     <link rel="stylesheet" href="style/fonts.css">
+    <link rel="stylesheet" href="style/task_form_template.css">
     <script src="js/script.js"></script>
     <script src="js/templates.js"></script>
     <script src="js/task_form.js"></script>
     <script src="js/summary.js"></script>
 </head>
 
-<body onload="init('summary')">
+<body onload="initSummary('summary')">
 
     <div w3-include-html="assets/templates/desktop_template.html"></div>
     <div w3-include-html="assets/templates/mobile_template.html"></div>
@@ -31,61 +32,63 @@
         <div class="summary-box">
             <div class="summary-content">
                 <div class="summary-top-third">
-                    <div>
-                        <h4>5</h4>
+                    <a href="board.html">
+                        <h4 id="tasks-amount"></h4>
                         <h5>Tasks in <br> board</h5>
-                    </div>
-                    <div>
-                        <h4>2</h4>
+                    </a>
+                    <a href="board.html">
+                        <h4 id="in-progress-amount"></h4>
                         <h5>Tasks in <br> progress</h5>
-                    </div>
-                    <div>
-                        <h4>2</h4>
+                    </a>
+                    <a href="board.html">
+                        <h4 id="awaiting-feedback-amount"></h4>
                         <h5>Awaiting <br> feedback</h5>
-                    </div>
+                    </a>
                 </div>
-                <div class="summary-middle-third">
+                <a href="board.html" class="summary-middle-third">
                     <div class="upcoming-task">
-                        <div id="upcoming-urgency">
+                        <div id="upcoming-prio-image">
                             <img src="assets/img/active-urgent.png">
                         </div>
                         <div>
-                            <h4>1</h4>
-                            <h5>Urgent</h5>
+                            <h4 id="upcoming-tasks-amount"></h4>
+                            <h5 id="upcoming-prio"></h5>
                         </div>
                     </div>
                     <div class="upcoming-seperator"></div>
                     <div class="upcoming-deadline">
-                        <h4>June 16, 2023</h4>
+                        <h4 id="upcoming-deadline"></h4>
                         <h5>Upcoming deadline</h5>
                     </div>
-                </div>
+                </a>
                 <div class="summary-bottom-third">
-                    <div class="to-do-amount"
+                    <a href="board.html" class="to-do-amount"
                         onmouseenter="changeImageOnHover('to-do-image', 'assets/img/black-edit-icon.png')"
                         onmouseleave="changeImageOnHover('to-do-image', 'assets/img/big-edit-icon.png')">
                         <div class="to-do-image">
                             <img id="to-do-image" src="assets/img/big-edit-icon.png">
                         </div>
                         <div>
-                            <h4>1</h4>
+                            <h4 id="to-do-amount"></h4>
                             <h5>To-do</h5>
                         </div>
-                    </div>
-                    <div class="done-amount" onmouseenter="changeImageOnHover('done-image', 'assets/img/black-check-icon.png')"
-                    onmouseleave="changeImageOnHover('done-image', 'assets/img/big-check-icon.png')">
+                    </a>
+                    <a href="board.html" class="done-amount"
+                        onmouseenter="changeImageOnHover('done-image', 'assets/img/black-check-icon.png')"
+                        onmouseleave="changeImageOnHover('done-image', 'assets/img/big-check-icon.png')">
                         <div class="done-image">
                             <img id="done-image" src="assets/img/big-check-icon.png">
                         </div>
                         <div>
-                            <h4>1</h4>
+                            <h4 id="done-amount"></h4>
                             <h5>Done</h5>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
-            <h3 class="daily-message">Good morning</h3>
+            <h3 id="daily-message" class="daily-message"></h3>
         </div>
+    </div>
     </div>
 </body>
 
