@@ -9,6 +9,7 @@ let category;
 let allCompletedSubtasks = [];
 
 
+
 /**
  * Initiates certain functions as soon as add_task.html loads.
  */
@@ -16,7 +17,6 @@ async function initTaskForm() {
     await init('add-task');
     renderCategories();
     setMinDate();
-    // renderContacts();
 }
 
 
@@ -44,10 +44,15 @@ async function addTask() {
     if (validateForm().length == validationNotes.length) {
         await saveTask(task);
         clearButton.click();
-        toggleClass('new-task-confirmation', 'confirmation-animation');
-        setTimeout(() => {
-            window.location = 'board.html'
-        }, 1250);
+        if (window.location !== 'board.html') {
+            toggleClass('new-task-confirmation', 'confirmation-animation');
+            setTimeout(() => {
+                window.location = 'board.html'
+            }, 1300);
+        } else {
+            updateArray();
+            renderTasks();
+        }
     }
 }
 
@@ -60,20 +65,6 @@ async function addTask() {
 async function saveTask(task) {
     allTasks.push(task);
     await setItem('allTasks', allTasks);
-}
-
-
-/**
- * Loads all Tasks which are stored from the server.
- */
-async function loadTask() {
-    try {
-        tasks = await getItem('allTasks');
-        formattedTasks = tasks.replace(/'/g, '"');
-        allTasks = JSON.parse(formattedTasks);
-    } catch(error) {
-        console.error('Loading error:', error);
-    }
 }
 
 

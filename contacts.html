@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,13 +14,111 @@
     <link rel="stylesheet" href="style/fonts.css">
     <script src="js/script.js"></script>
     <script src="js/task_form.js"></script>
-    <script src="js/templates.js"></script>
+    <script src="js/templates/contacts_templates.js"></script>
     <script src="js/contacts.js"></script>
+    <script src="js/clear_and_validate_form.js"></script>
 </head>
-<body onload="init('contacts')">
+
+<body onload="initContacts()">
 
     <div w3-include-html="assets/templates/desktop_template.html"></div>
     <div w3-include-html="assets/templates/mobile_template.html"></div>
-    
+    <div class="wrapper">
+        <div id="contacts-list"></div>
+        <div class="contact-info-wrapper">
+            <div class="contact-info">
+                <div class="contacts-header">
+                    <h1>Contacts</h1>
+                    <img src="assets/img/vertical-line-blue.png">
+                    <h2>Better with a team</h2>
+                </div>
+                <div class="detailed-contact">
+                    <div class="detailed-contact-header">
+                        <p id="abbreviation"></p>
+                        <h3 id="contact-name"></h3>
+                    </div>
+                    <div class="contact-information-header">
+                        <span>Contact information</span>
+                        <div onclick=""
+                            onmouseenter="changeImageOnHover('edit-contact-icon', 'assets/img/edit-icon-blue.png')"
+                            onmouseleave="changeImageOnHover('edit-contact-icon', 'assets/img/edit-icon-black.png')">
+                            <img id="edit-contact-icon" src="assets/img/edit-icon-black.png">
+                            <p>Edit contact</p>
+                        </div>
+                    </div>
+                    <div class="contact-information-body">
+                        <h3>Email</h3>
+                        <a id="contact-email" href=""></a>
+                        <h3>Phone</h3>
+                        <a id="contact-phone" href=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="new-contact-button-wrapper">
+                <div class="new-contact-button" onclick="toggleClass('contact-form-wrapper', 'hide')">
+                    <p>New contact</p>
+                    <img src="assets/img/new-contact-icon.png">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="new-contact-confirmation">
+        Contact successfully created
+    </div>
+    <div id="contact-form-wrapper" class="hide">
+        <div class="contact-form-card">
+            <div class="contact-form-header">
+                <img class="contact-form-logo" src="assets/img/favicon.png">
+                <h1>Add contact</h1>
+                <h2>Tasks are better with a team!</h2>
+                <img class="contact-form-underline" src="assets/img/horizontal-line-blue.png">
+            </div>
+            <div class="contact-form-body">
+                <img src="assets/img/profile-icon-empty.png">
+                <div class="contact-form-with-cross">
+                    <img class="scale-on-hover" src="assets/img/blue-cross.png"
+                        onclick="toggleClass('contact-form-wrapper', 'hide')">
+                    <div class="contact-form">
+                        <form onsubmit="addContact(); return false;">
+                            <div>
+                                <div class="input-wrapper">
+                                    <input id="name-input" type="text" placeholder="Name">
+                                    <img src="assets/img/name-icon.png">
+                                </div>
+                                <p id="name-validation" class="validation-note"></p>
+                            </div>
+                            <div>
+                                <div class="input-wrapper">
+                                    <input id="email-input" type="text" placeholder="Email">
+                                    <img src="assets/img/email-icon.png">
+                                </div>
+                                <p id="email-validation" class="validation-note"></p>
+                            </div>
+                            <div>
+                                <div class="input-wrapper">
+                                    <input id="phone-input" type="text" placeholder="Phone">
+                                    <img src="assets/img/phone-icon.png">
+                                </div>
+                                <p id="phone-validation" class="validation-note"></p>
+                            </div>
+                            <div class="contact-form-navigation">
+                                <div id="cancel-button" onclick="clearContactForm()"
+                                    onmouseenter="changeImageOnHover('cancel-new-contact-image', 'assets/img/light-blue-cross.png')"
+                                    onmouseleave="changeImageOnHover('cancel-new-contact-image', 'assets/img/blue-cross-small.png')">
+                                    <p>Cancel</p>
+                                    <img id="cancel-new-contact-image" src="assets/img/blue-cross-small.png">
+                                </div>
+                                <button class="create-button" type="submit">
+                                    <p>Create contact</p>
+                                    <img src="assets/img/check-icon.png">
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

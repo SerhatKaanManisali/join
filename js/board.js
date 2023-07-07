@@ -1,4 +1,3 @@
-let abbreviationColors = ['rgb(1, 144, 224)', 'rgb(238, 0, 214)', 'rgb(2, 207, 47)', 'rgb(255, 168, 0)', 'rgb(147, 39, 255)', 'rgb(255, 92, 0)', 'rgb(0, 124, 238)', 'rgb(78, 150, 61)', 'rgb(50, 218, 255)']
 let currentStatus;
 let currentId;
 let currentlyDraggedElement;
@@ -26,7 +25,7 @@ function renderTasks() {
 
 
 function renderToDo() {
-    let toDos = allTasks.filter(t => t['status'] == 'to do');
+    let toDos = allTasks.filter(t => t['status'] == 'to-do');
     let toDoList = document.getElementById('to-do-list');
     toDoList.innerHTML = '';
     for (let t = 0; t < toDos.length; t++) {
@@ -41,7 +40,7 @@ function renderToDo() {
 
 
 function renderInProgress() {
-    let inProgress = allTasks.filter(t => t['status'] == 'in progress');
+    let inProgress = allTasks.filter(t => t['status'] == 'in-progress');
     let inProgressList = document.getElementById('in-progress-list');
     inProgressList.innerHTML = '';
     for (let t = 0; t < inProgress.length; t++) {
@@ -56,7 +55,7 @@ function renderInProgress() {
 
 
 function renderAwaitingFeedback() {
-    let awaitingFeedback = allTasks.filter(t => t['status'] == 'awaiting feedback');
+    let awaitingFeedback = allTasks.filter(t => t['status'] == 'awaiting-feedback');
     let awaitingFeedbackList = document.getElementById('awaiting-feedback-list');
     awaitingFeedbackList.innerHTML = '';
     for (let t = 0; t < awaitingFeedback.length; t++) {
@@ -131,44 +130,6 @@ function renderDetailedAssignment(t) {
         assignmentTitle.insertAdjacentHTML('afterend', detailedAssignmentTemplate(person, createNameAbbreviation(person), backgroundColor));
     }
 }
-
-
-/**
- * @param {String} name 
- * @returns abbreviation of a given name/string.
- */
-function createNameAbbreviation(name) {
-    let abbreviation = '';
-    if ((/[a-zA-Z]/).test(name) == true) {
-        let splitName = name.split(/(\s+)/);
-        for (let i = 0; i < splitName.length; i++) {
-            const firstChar = splitName[i].charAt(0).trim();
-            if (firstChar !== '') {
-                abbreviation += firstChar;
-            }
-        };
-        return abbreviation;
-    } else {
-        return '+' + name;
-    }
-}
-
-
-/**
- * Picks random color out of a colors pool. Used for picking a color for profile icons on the board.
- * 
- * @param {Array} names 
- * @returns array called colors which contains rgbs as strings.
- */
-function pickRandomColor(names) {
-    let colors = [];
-    for (let n = 0; n < names.length; n++) {
-        let rgb = abbreviationColors[Math.floor(Math.random() * abbreviationColors.length)];
-        colors.push(rgb);
-    }
-    return colors;
-}
-
 
 
 function renderSubtasks(t) {
@@ -305,6 +266,7 @@ function renderAssignment(assignment, t) {
 
 async function deleteTask(t) {
     allTasks.splice(t, 1);
+    allTasks.forEach(task => task.id == allTasks.indexOf(task));
     await setItem('allTasks', allTasks);
     renderTasks();
     toggleClass('detailed-task-box', 'hide');
@@ -336,16 +298,30 @@ async function confirmTask(t) {
 
 function findTask() {
     let input = document.getElementById('search-field').value.toLowerCase();
-    let toDoList = document.getElementById('to-do-list');
-    toDoList.innerHTML = '';
-    for (let t = 0; t < allTasks.length; t++) {
-        taskCardElements(t);
-        if (elements[7].toLowerCase().includes(input) || elements[4].toLowerCase().includes(input)) {
-            toDoList.innerHTML += taskCardTemplate(elements, t);
-            subTaskProgress(elements[6], elements[8], t);
-            renderAssignment(elements[0], t);
-        }
-    }
+    let foundTasks = allTasks.filter(task => {
+        const title = task.title.toLowerCase();
+        const description = task.description.toLowerCase();
+        return title.includes(input) || description.includes(input);
+    });
+    renderFoundTasks(foundTasks)
+}
+
+
+
+function renderFoundTasks(foundTasks) {
+    document.getElementById('to-do-list').innerHTML = '';
+    document.getElementById('in-progress-list').innerHTML = '';
+    document.getElementById('awaiting-feedback-list').innerHTML = '';
+    document.getElementById('done-list').innerHTML = '';
+
+    foundTasks.forEach(task => {
+        let  index = allTasks.indexOf(task);
+        let column = task.status;
+        taskCardElements(index);
+        document.getElementById(`${column}-list`).innerHTML += taskCardTemplate(elements, index);
+        subTaskProgress(elements[6], elements[8], index);
+        renderAssignment(elements[0], index);
+    })
 }
 
 
@@ -371,7 +347,8 @@ function allowDrop(ev) {
 
 
 async function moveTo(status) {
-    allTasks[currentlyDraggedElement]['status'] = status;
+    let index = allTasks.findIndex(task => task.id == currentlyDraggedElement)
+    allTasks[index]['status'] = status;
     await setItem('allTasks', allTasks);
     renderTasks();
 }

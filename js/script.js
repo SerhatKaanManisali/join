@@ -1,5 +1,6 @@
 const STORAGE_TOKEN = '74NQB1Z0LQUPK10P1TJBALFFX9SCZEXIKFMJ1TYW';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item'
+let abbreviationColors = ['rgb(1, 144, 224)', 'rgb(238, 0, 214)', 'rgb(2, 207, 47)', 'rgb(255, 168, 0)', 'rgb(147, 39, 255)', 'rgb(255, 92, 0)', 'rgb(0, 124, 238)', 'rgb(78, 150, 61)', 'rgb(50, 218, 255)', 'rgb(255, 0, 0)', 'rgb(25, 0, 115)', 'rgb(230, 0, 255)', 'rgb(93, 0, 155)', 'rgb(0, 255, 255)', 'rgb(0, 255, 106)']
 
 
 /**
@@ -9,6 +10,7 @@ const STORAGE_URL = 'https://remote-storage.developerakademie.org/item'
  */
 async function init(id) {
     await loadTask();
+    await loadContacts();
     await includeHTML();
     changeHighlight(id);
 }
@@ -59,6 +61,31 @@ async function getItem(key) {
             return res.data.value;
         } throw `Could not find date with key "${key}".`;
     });
+}
+
+
+/**
+ * Loads all Tasks which are stored from the server.
+ */
+async function loadTask() {
+    try {
+        tasks = await getItem('allTasks');
+        formattedTasks = tasks.replace(/'/g, '"');
+        allTasks = JSON.parse(formattedTasks);
+    } catch(error) {
+        console.error('Loading error:', error);
+    }
+}
+
+
+async function loadContacts() {
+    try {
+        contacts = await getItem('allContacts');
+        formattedContacts = contacts.replace(/'/g, '"');
+        allContacts = JSON.parse(formattedContacts);
+    } catch(error) {
+        console.error('Loading error:', error);
+    }
 }
 
 
@@ -175,4 +202,42 @@ function formatDate(date) {
         let dataPieces = date.split("/")
         return dataPieces[2] + "-" + dataPieces[1] + "-" + dataPieces[0];
     }
+}
+
+
+/**
+ * @param {String} name 
+ * @returns abbreviation of a given name/string.
+ */
+function createNameAbbreviation(name) {
+    let abbreviation = '';
+    if ((/[a-zA-Z]/).test(name) == true) {
+        let splitName = name.split(/(\s+)/);
+        for (let i = 0; i < splitName.length; i++) {
+            const firstChar = splitName[i].charAt(0).trim();
+            if (firstChar !== '') {
+                abbreviation += firstChar;
+            }
+        };
+        return abbreviation;
+    } else {
+        return '+' + name;
+    }
+}
+
+
+
+/**
+ * Picks random color out of a colors pool. Used for picking a color for profile icons on the board.
+ * 
+ * @param {Array} names 
+ * @returns array called colors which contains rgbs as strings.
+ */
+function pickRandomColor(names) {
+    let colors = [];
+    for (let n = 0; n < names.length; n++) {
+        let rgb = abbreviationColors[Math.floor(Math.random() * abbreviationColors.length)];
+        colors.push(rgb);
+    }
+    return colors;
 }

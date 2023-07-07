@@ -205,3 +205,66 @@ function validationMessage(id, message) {
     }
     validationMessage.innerHTML = message;
 }
+
+
+
+function validateName() {
+    let name = document.getElementById('name-input');
+    if (name.value == '') {
+        validationMessage('name', 'Please enter a name');
+    } else {
+        if (name.value.match(/^[a-z ,.'-]+$/i)) {
+            validationMessage('name');
+        return name.value;
+        } else {
+            validationMessage('email', 'Please enter a valid name');
+        }
+        
+    }
+}
+
+
+
+function validateEmail() {
+    let email = document.getElementById('email-input');
+    if (email.value == '') {
+        validationMessage('email', 'Please enter an email');
+    } else {
+        if (email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            validationMessage('email');
+            return email.value;
+        } else {
+            validationMessage('email', 'Please enter a valid email');
+        }
+    }
+}
+
+
+
+function validatePhone() {
+    let phone = document.getElementById('phone-input');
+    if (phone.value == '') {
+        validationMessage('phone', 'Please enter a phone number');
+    } else {
+        if (phone.value.match(/^\+?[0-9](?:[- ]?[0-9]){9,11}$/)) {
+            validationMessage('phone');
+            return phone.value;
+        } else {
+            validationMessage('phone', 'Please enter a valid phone number');
+        }
+    }
+}
+
+
+
+function clearContactForm() {
+    let name = document.getElementById('name-input');
+    let email = document.getElementById('email-input');
+    let phone = document.getElementById('phone-input');
+    name.value = '';
+    email.value = '';
+    phone.value = '';
+    validationMessage('name');
+    validationMessage('email');
+    validationMessage('phone');
+}

@@ -16,7 +16,7 @@
     <script src="js/script.js"></script>
     <script src="js/task_form.js"></script>
     <script src="js/clear_and_validate_form.js"></script>
-    <script src="js/templates.js"></script>
+    <script src="js/templates/board_template.js"></script>
     <script src="js/board.js"></script>
 </head>
 
@@ -47,7 +47,7 @@
                         onmouseleave="changeImageOnHover('add-to-do', 'assets/img/plus-button.png')"
                         src="assets/img/plus-button.png">
                 </div>
-                <div id="to-do-list" class="task-list" ondrop="moveTo('to do')"
+                <div id="to-do-list" class="task-list" ondrop="moveTo('to-do')"
                     ondragover="allowDrop(event); highlight('to-do-list')" ondragleave="removeHighlight('to-do-list')"></div>
             </div>
             <div class="column">
@@ -58,7 +58,7 @@
                         onmouseleave="changeImageOnHover('add-in-progress', 'assets/img/plus-button.png')"
                         src="assets/img/plus-button.png">
                 </div>
-                <div id="in-progress-list" class="task-list" ondrop="moveTo('in progress')"
+                <div id="in-progress-list" class="task-list" ondrop="moveTo('in-progress')"
                     ondragover="allowDrop(event); highlight('in-progress-list')" ondragleave="removeHighlight('in-progress-list')"></div>
             </div>
             <div class="column">
@@ -69,7 +69,7 @@
                         onmouseleave="changeImageOnHover('add-awaiting-feedback', 'assets/img/plus-button.png')"
                         src="assets/img/plus-button.png">
                 </div>
-                <div id="awaiting-feedback-list" class="task-list" ondrop="moveTo('awaiting feedback')"
+                <div id="awaiting-feedback-list" class="task-list" ondrop="moveTo('awaiting-feedback')"
                     ondragover="allowDrop(event); highlight('awaiting-feedback-list')" ondragleave="removeHighlight('awaiting-feedback-list')">
                 </div>
             </div>
@@ -87,6 +87,9 @@
         </div>
         <div id="detailed-task-box" class="hide"></div>
     </div>
+    <div id="new-task-confirmation" class="task-confirmation">
+        Task added to board
+        <img src="assets/img/board-icon-white.png">
     </div>
 </body>
 
